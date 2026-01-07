@@ -1,0 +1,46 @@
+// Definición de colores
+$primary-color: #2d90df;
+$secondary-color: #2ee0d7;
+$tertiary-color: #df7c2d;
+$quaternary-color: #df2d90;
+$important-color:#2d37df;
+$error-color: #e02e37;
+
+// Background de chips
+$quaternary-chip: hsl(327, 74%, 50%);
+$important-chip:hsl(237, 74%, 50%);
+$danger-chip: hsl(357, 74%, 50%);
+$success-chip: hsl(177,74%, 50%);
+$info-chip:hsl(57, 74%, 50%);
+$terciary-chip: hsl(27, 74%, 50%);
+
+// Background de alertas
+$info-color:hsl(57, 74%, 87%);
+$warning-color: hsl(207, 74%, 87%);
+$error-color: hsl(357, 74%, 87%);
+$success-color: hsl(177,74%, 87%);
+
+// Background light
+$light-primary-color: hsl(207, 74%, 65%);
+$light-secondary-color-: hsl(177,74%, 65%);
+$light-tertiary-color-: hsl(27, 74%, 65%);
+$light-info-color-: hsl(237, 74%, 65%);
+$light-error-color-: hsl(357, 74%, 65%);
+
+// Definición de fuentes
+$font-stack:"Roboto", "Arial", sans-serif;
+$text-color: #333333;
+$font-size:16px;
+$spacing:1.5em;
+
+// Color de fuente
+$dark-color: hsl(0, 0%, 15%);
+$white-color: #ffffff;
+
+// Color de fuente
+$primary-font: $primary-color;
+$tertiary-font: $tertiary-color;
+$pink-font: $quaternary-color;
+$success-font: hsl(177, 100%, 50%);
+$important-font: $important-color;
+$error-font: $error-color;

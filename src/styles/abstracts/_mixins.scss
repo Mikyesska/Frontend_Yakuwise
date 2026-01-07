@@ -1,0 +1,30 @@
+// Definición robusta
+@mixin layout-distribute($justify: center, $align: center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: wrap;
+    @content; // Permite añadir estilos extra al bloque
+}
+
+// Implementación rápida usando nombres de parámetros
+
+@mixin custom-box($color, $radio: 4px) {
+    background-color: $color;
+    border-radius: $radio;
+    padding: 15px;
+}
+.boton-alerta {
+    @include custom-box(red, 10px);
+}
+
+@mixin grid {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.dad-box {
+    height: 200px;
+    @include layout-distribute(); // Aplica los estilos aquí
+}
