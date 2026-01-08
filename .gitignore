@@ -46,3 +46,6 @@ Thumbs.db
 # Gemini
 *.gemini
 /.gemini
+
+# package-lock.json
+package-lock.json
