@@ -61,7 +61,13 @@ For more information on using the Angular CLI, including detailed command refere
 
 
 ## Configuración de estilos scss globales para cualquier componente 
-Para que las variables o mixins estén disponibles en todos los componentes sin importar manualmente, configuramos stylePreprocessorOptions en angular.json:
+* IMPORTANTE: Dentro de la carpeta abstracts, agregar un archivo `_index.scss` y agregar:
+```scss
+    // abstracts/_index.scss
+    @forward 'mixins';
+    @forward 'variables';
+```
+* Para que las variables o mixins estén disponibles en todos los componentes sin importar manualmente, configuramos stylePreprocessorOptions en angular.json:
 ```json
     "stylePreprocessorOptions": {
         "includePaths": [
@@ -69,7 +75,18 @@ Para que las variables o mixins estén disponibles en todos los componentes sin 
         ]
     }
 ```
-Para importar usamos:
+* Para importar usamos:
 ```scss
     @use 'abstracts' as tool;
 ```
+
+* Ejemplo de uso:
+```scss
+    @use 'abstracts' as tool;
+
+    .nav > ul{
+    background-color: tool.$primary-color;
+    @include tool.layout-distribute(space-between, center);
+    }
+```
+
