@@ -1,6 +1,6 @@
 @use 'abstracts' as tool;
 
-.nav > ul{
+.header {
   background-color: tool.$primary-color;
-  @include tool.layout-distribute(space-between, center);
+  @include tool.layout-distribute(space-evenly, center);
 }

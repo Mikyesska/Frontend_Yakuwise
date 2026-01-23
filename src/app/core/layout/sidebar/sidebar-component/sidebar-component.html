@@ -1,1 +1,30 @@
-<p>sidebar-component works!</p>
+<aside class="sidebar" [class.open]="sidebarOpen">
+    <nav class="sidebar-nav">
+        <ul>
+            <div class="sidebar-header">
+                <h2>Yakuwasi</h2>
+            </div>
+            <li><a href="/dashboard"> Home</a></li>
+            <li><a href="/dashboard"> Dashboard</a></li>
+            <li>
+                <details>
+                    <summary>Seguridad</summary>
+                    <ul>
+                        <li><a href="/roles/list">Roles y permisos</a></li>
+                        <li><a href="/modulos/list">Módulos y menus</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details>
+                    <summary>👤 Usuarios</summary>
+                    <ul>
+                        <li><a href="/users/list">Lista de usuarios</a></li>
+                        <li><a href="/users/create">Crear usuario</a></li>
+                        <li><a href="/users/roles">Roles y permisos</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </nav>
+</aside>
