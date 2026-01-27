@@ -9,3 +9,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes)
   ]
 };
+
+export const API_BASE_URL = 'http://localhost:8000/api'; // o tu dominio en producción
