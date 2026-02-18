@@ -1,22 +1,26 @@
-// Definición robusta
-@mixin layout-distribute($justify: center, $align: center) {
-    display: flex;
-    justify-content: $justify;
-    align-items: $align;
-    flex-wrap: wrap;
-    @content; // Permite añadir estilos extra al bloque
+@use 'variables' as v;
+
+@mixin respond-to($breakpoint) {
+  @media (min-width: map-get(v.$breakpoints, $breakpoint)) {
+    @content;
+  }
 }
 
-// Implementación rápida usando nombres de parámetros
+@mixin layout-flex($direction:row,$justify: center, $align: center, $wrap: nowrap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+    @content;
+}
 
 @mixin custom-box($color, $radio: 4px) {
     background-color: $color;
     border-radius: $radio;
     padding: 15px;
 }
-.boton-alerta {
-    @include custom-box(red, 10px);
-}
+
 
 @mixin grid {
     display: grid;
@@ -24,7 +28,12 @@
     align-content: center;
 }
 
-.dad-box {
-    height: 200px;
-    @include layout-distribute(); // Aplica los estilos aquí
+@mixin button-style($bg-color:$primary-color) {
+    background-color: $bg-color;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    @content;
 }

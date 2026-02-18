@@ -3,8 +3,13 @@ import { WelcomeComponent } from './pages/welcome/welcome-component/welcome-comp
 import { LoginComponent } from './features/auth/pages/login/login-component/login-component';
 import { DashboardComponent } from './pages/dashboard/dashboard-component/dashboard-component';
 import { HomeComponent } from './pages/home/home-component/home-component';
+import { FrontPageComponent } from './core/layout/front-page/front-page-component';
 
 export const routes: Routes = [
+  {
+    path: 'frontpage',
+    component: FrontPageComponent
+  },
   {
     path: 'home',
     component: HomeComponent
@@ -14,7 +19,7 @@ export const routes: Routes = [
     component:LoginComponent
   },
   {
-    path: '',
+    path: 'welcome',
     component: WelcomeComponent
   },
   {
@@ -23,6 +28,6 @@ export const routes: Routes = [
   },
   {
     path:'**',
-    redirectTo:''
+    redirectTo:'frontpage'
   }
 ];

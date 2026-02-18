@@ -1,0 +1,129 @@
+@use 'abstracts/mixins' as m;
+
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  @include m.layout-flex(column, center, center, nowrap);
+  width: 100%;
+  height: 100dvh;
+
+  .fullscreen-video-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .title {
+    position: absolute;
+    z-index: 1;
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    font-size: 3rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 0;
+
+    @include m.respond-to(md) {
+      font-size: 4rem;
+    }
+
+  }
+
+  .btn-audio {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1;
+    background: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    @include m.layout-flex();
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgb(255, 255, 255);
+
+    @include m.respond-to(md) {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    svg {
+      width: 1.75rem;
+      height: 1.75rem;
+      color: #fff;
+
+      @include m.respond-to(md) {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
+  .btn-audio:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-audio:active {
+    transform: scale(0.95);
+  }
+
+  .btn-enter {
+    position: absolute;
+    z-index: 1;
+    bottom: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: hsl(206, 87%, 56%);
+    opacity: 0.95;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    @include m.layout-flex();
+    width: calc(100vw - 48px);
+    height: 3rem;
+
+    span {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      color: #fff;
+      font-size: 1rem;
+
+      @include m.respond-to(md) {
+        font-size: 1.25rem;
+      }
+    }
+
+    @include m.respond-to(md) {
+      width: 8.5rem;
+      height: 3.25rem;
+      padding: 1rem 2rem;
+      top: calc(50vh + 2.5rem);
+    }
+
+  }
+
+  .btn-enter:hover {
+    background-color: hsl(206, 87%, 45%);
+    opacity: 0.95;
+  }
+
+  .btn-enter:active {
+    background-color: hsl(207, 86%, 43%);
+    opacity: 0.95;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    span {
+      font-weight: 600;
+    }
+  }
+}
