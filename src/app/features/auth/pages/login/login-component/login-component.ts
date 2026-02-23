@@ -8,5 +8,17 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   styleUrl: './login-component.scss',
 })
 export class LoginComponent {
+  showPassword: boolean = false;
 
+  tooglePasswordVisibility() {
+    const inputPassword = document.getElementById('password') as HTMLInputElement;
+    this.showPassword=!this.showPassword;
+
+    if (this.showPassword) {
+      inputPassword.setAttribute('type', 'text');
+    } else {
+      inputPassword.setAttribute('type', 'password');
+    }
+    
+  }
 }

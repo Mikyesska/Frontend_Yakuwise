@@ -7,9 +7,6 @@ $breakpoints: (
   xxl: 1920px  // full HD y más
 );
 
-
-
-
 // Escala de Grises
 $white:    #ffffff;
 $gray-100: #f8f9fa;
@@ -18,12 +15,25 @@ $gray-900: #212529;
 
 // -----------------------------------------------------------------------------
 // Definición de colores
-$primary-color: #2d90df;
+$primary-color: #2E9BF0;
+$primary-hover-color: #2563eb;
 $secondary-color: #2ee0d7;
 $tertiary-color: #df7c2d;
 $quaternary-color: #df2d90;
 $important-color:#2d37df;
-$error-color: #e02e37;
+$error-color: red;
+
+// Colores
+// $color-secondary: #64748b;
+// $color-bg: #ffffff;
+// $color-text: #1f2937;
+// $color-border: #d1d5db;
+
+
+// Espaciados y Bordes
+$radius: 0.25rem;
+$padding-input: 0.75rem 1rem;
+$font-main: 'Roboto', sans-serif;
 
 // Background de chips
 $quaternary-chip: hsl(327, 74%, 50%);
@@ -40,11 +50,11 @@ $error-color: hsl(357, 74%, 87%);
 $success-color: hsl(177,74%, 87%);
 
 // Background light
-$light-primary-color: hsl(207, 74%, 65%);
-$light-secondary-color-: hsl(177,74%, 65%);
-$light-tertiary-color-: hsl(27, 74%, 65%);
-$light-info-color-: hsl(237, 74%, 65%);
-$light-error-color-: hsl(357, 74%, 65%);
+$light-primary-color: hsla(207, 74%, 65%, 0.185);
+$light-secondary-color: hsl(177,74%, 65%);
+$light-tertiary-color: hsl(27, 74%, 65%);
+$light-info-color: hsl(237, 74%, 65%);
+$light-error-color: hsl(357, 74%, 65%);
 
 // Definición de fuentes
 $font-stack:"Roboto", "Arial", sans-serif;

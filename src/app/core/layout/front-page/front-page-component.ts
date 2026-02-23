@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-front-page-component',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './front-page-component.html',
   styleUrl: './front-page-component.scss',
 })
