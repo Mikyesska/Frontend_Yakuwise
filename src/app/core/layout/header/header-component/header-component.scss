@@ -1,7 +1,82 @@
-@use 'abstracts' as tool;
+@use 'abstracts/mixins' as m;
+@use 'abstracts/variables' as v;
 
 .header {
-  background-color: tool.$primary-color;
+  width: 100vw;
+  height: 10vh;
+  @include m.layout-flex(row,space-between, center, nowrap);
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #eee;
+  backdrop-filter: blur(5px);
   
-  // @include tool.layout-distribute(space-evenly, center);
+  .sidebar-btn, .user-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem;
+
+    .user-icon, .menubar-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: v.$primary-color;
+    }
+
+    &:hover {
+      background-color: v.$light-primary-color;
+      border: none;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+  }
+  .sidebar-btn {
+    @include m.respond-to(xs) {
+      display: flex;
+    }
+
+    @include m.respond-to(lg) {
+      display: none;
+    }
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+
+    @include m.respond-to(xs) {
+      display: none;
+    }
+
+    @include m.respond-to(lg) {
+      display: flex;
+    }
+
+
+    .logo-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: v.$primary-color;
+      
+    }
+    .logo-text {
+      font-family: 'Fredoka', sans-serif;
+      margin-left: 0.25rem;
+      font-weight: 400;
+      color: v.$primary-color;
+    }
+  }
+  .welcome-message
+  {
+    color: v.$primary-color;
+    
+  }
 }
