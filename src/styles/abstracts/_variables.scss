@@ -15,7 +15,7 @@ $gray-900: #212529;
 
 // -----------------------------------------------------------------------------
 // Definición de colores
-$primary-color: #2E9BF0;
+$primary-color: hsl(206, 87%, 56%);
 $primary-hover-color: hsl(206, 87%, 45%);
 $primary-active-color: hsl(207, 86%, 43%);
 $secondary-color: #2ee0d7;
@@ -51,7 +51,7 @@ $error-color: hsl(357, 74%, 87%);
 $success-color: hsl(177,74%, 87%);
 
 // Background light
-$light-primary-color: hsla(207, 74%, 65%, 0.185);
+$light-primary-color: hsl(206, 87%, 92%);
 $light-secondary-color: hsl(177,74%, 65%);
 $light-tertiary-color: hsl(27, 74%, 65%);
 $light-info-color: hsl(237, 74%, 65%);

@@ -2,7 +2,6 @@
 @use 'abstracts/variables' as v;
 
 .header {
-    width: 100vw;
     height: 4rem;
     @include m.layout-flex(row, space-between, center, nowrap);
     background-color: #fff;

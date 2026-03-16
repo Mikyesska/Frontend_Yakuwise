@@ -4,7 +4,6 @@ import { LoginComponent } from './features/auth/pages/login/login-component/logi
 import { DashboardComponent } from './pages/dashboard/dashboard-component/dashboard-component';
 import { HomeComponent } from './pages/home/home-component/home-component';
 import { FrontPageComponent } from './core/layout/front-page/front-page-component';
-import { HeaderComponent } from './core/layout/header/header-component/header-component';
 
 export const routes: Routes = [
   {
@@ -26,10 +25,6 @@ export const routes: Routes = [
   {
     path:'dashboard',
     component:DashboardComponent
-  },
-  {
-    path: 'header',
-    component: HeaderComponent
   },
   {
     path:'**',

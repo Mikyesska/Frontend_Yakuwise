@@ -1,0 +1,54 @@
+@use 'abstracts/mixins' as m;
+@use 'abstracts/variables' as v;
+
+.home{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+            "header"
+            "sidebar"
+            "main";
+    .sidebar{
+        margin: auto;
+    }
+    .main{
+        position: absolute;
+        z-index: -1;
+        top: calc(4rem + 4px);
+        width: 100vw;
+        height: calc(100vh - 4rem - 4px);
+        padding: 2rem;
+    }
+    .footer{
+        display: none;
+    }
+
+    @include m.respond-to(lg) {
+        grid-template-columns: 1fr 3fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas: 
+            "header header"
+            "sidebar main"
+            "footer footer";
+        .header{
+            grid-area: header;
+        }
+        .sidebar{
+            grid-area: sidebar;
+            width: 16rem;
+        }
+        .main{
+            display: block;
+            position: inherit;
+            grid-area:main;
+            width: calc(100vw - 16rem - 2px);
+            height: calc(100vh - 8rem - 4px);
+        }
+        .footer{
+            display: block;
+            grid-area: footer;
+        }
+    }
+}

@@ -1,0 +1,130 @@
+@use 'abstracts/mixins' as m;
+@use 'abstracts/variables' as v;
+
+.sidebar-container {
+    width: 16rem;
+    height: auto;
+    padding-bottom: 2rem;
+    background-color: v.$primary-color;
+    overflow-y: auto;
+    border-radius: 0.25rem;
+    border: 1px solid v.$primary-active-color;
+    filter: drop-shadow();
+    
+    .icon-sidebar {
+        align-content: center;
+        width: 1.25rem;
+        height: 1.25rem;
+        color:#fff;
+        margin-right: 0.75rem;
+    }
+
+    .menu{
+        .home-menu {
+            position: relative;
+
+            .btn-close {
+                position: absolute;
+                top:1rem;
+                right: 1rem;
+                @include m.layout-flex();
+                align-self: flex-end;
+                border-radius: 50%;
+                padding: 0.25rem;
+                border: transparent;
+                color: v.$primary-hover-color;
+                background-color: v.$light-primary-color;
+                filter: drop-shadow();
+                cursor: pointer;
+        
+                @include m.respond-to(lg) {
+                    display: none;
+                }
+        
+                .icon-close {
+                    width: 0.75rem;
+                    height: 0.75rem;
+                }
+        
+                &:hover {
+                    background-color: #fff;
+                    color: v.$primary-color;
+                    box-shadow: 0 0 5px v.$light-primary-color;
+                }
+        
+                &:active {
+                    box-shadow: 0 0 2px v.$primary-active-color;
+                }
+            }
+            padding:1rem;
+            list-style: none;
+
+            li {
+                a{
+                    color:#fff;
+                    text-decoration: none;
+                }
+            }
+        }
+        
+        details{
+            overflow: clip;
+            transition: interpolate-size 0.3s ease;
+            cursor: pointer;
+
+            summary {
+                @include m.layout-flex(row, flex-start, center);
+                padding: 1rem;
+                list-style: none;
+                color:#fff;
+            }
+
+            summary::after {
+                margin-left: auto;
+                content: "\203A";
+                font-size: 2.25rem;
+                font-weight: lighter; 
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                line-height: 0;
+            }
+
+            .security-menu {
+                list-style: none;
+                
+                li {
+                    padding-left: 3rem;
+                    padding-block: 1rem;
+                    
+                    &:hover{
+                        background-color: v.$white-color;
+
+                        svg{
+                            color:v.$primary-active-color;
+    
+                        }
+                        
+                        a {
+                            color:v.$primary-active-color;
+                        }
+                    }
+                    
+                    a{
+                        text-decoration: none;
+                        color:#fff;
+                    }
+                }
+            }
+
+        }
+        details[open] summary::after {
+            transform: rotate(90deg); 
+        }
+    }
+    
+    @include m.respond-to(lg) {
+        border-radius: 0;
+        margin-inline: inherit;
+        width: auto;
+        height: calc(100vh - 8rem - 4px);
+    }
+}
