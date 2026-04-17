@@ -3,12 +3,12 @@
 
 .footer {
     border-top: 4px solid v.$primary-color;
-    height: 4rem;
+    width: 100vw;
+    height: 3rem;
     backdrop-filter: blur(5px);
 
     @include m.respond-to(lg) {
         @include m.layout-flex();
-        width: calc(100vw - 16rem);
         
         p{
             background-color: v.$white-color;

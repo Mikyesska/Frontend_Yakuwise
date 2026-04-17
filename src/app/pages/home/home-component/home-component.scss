@@ -27,27 +27,27 @@
 
     @include m.respond-to(lg) {
         grid-template-columns: 1fr 3fr;
-        grid-template-rows: auto 1fr auto;
+        grid-template-rows: 3rem 1fr 3rem;
         grid-template-areas: 
             "header header"
             "sidebar main"
-            "sidebar footer";
+            "footer footer";
         .header{
             grid-area: header;
         }
         .sidebar{
             grid-area: sidebar;
-            width: 16rem;
+            // width: 16rem;
         }
         .main{
-            display: block;
+            display: flex;
             position: inherit;
             grid-area:main;
-            width: calc(100vw - 16rem - 2px);
-            height: calc(100vh - 8rem - 4px);
+            width: calc(100vw - 16rem);
+            height: calc(100vh - 6.5rem);
         }
         .footer{
-            display: block;
+            display: flex;
             grid-area: footer;
         }
     }
