@@ -4,7 +4,7 @@
 .header {
     height: 3rem;
     @include m.layout-flex(row, space-between, center, nowrap);
-    background-color: #fff;
+    background-color: v.$white-color;
     padding: 1.5rem;
     border-bottom: 4px solid v.$primary-color;
     backdrop-filter: blur(5px);
@@ -14,7 +14,7 @@
         @include m.layout-flex();
         cursor: pointer;
         border-radius: 50%;
-        background-color: #fff;
+        background-color: v.$white-color;
         border: none;
         padding: 0.25rem;
 
@@ -75,7 +75,6 @@
     }
 
     .welcome-message {
-        color: v.$primary-color;
-
+        color: v.$dark-color;
     }
 }
