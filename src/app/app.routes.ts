@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { WelcomeComponent } from './pages/welcome/welcome-component/welcome-component';
 import { LoginComponent } from './features/auth/pages/login/login-component/login-component';
 import { DashboardComponent } from './pages/dashboard/dashboard-component/dashboard-component';
 import { HomeComponent } from './pages/home/home-component/home-component';
 import { FrontPageComponent } from './core/layout/front-page/front-page-component';
+import { WelcomeComponent } from './pages/welcome/welcome-component/welcome-component';
 
 export const routes: Routes = [
   {
@@ -12,15 +12,17 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    children:[
+      {
+        path:'welcome',
+        component:WelcomeComponent
+      }
+    ]
   },
   {
     path:'login',
     component:LoginComponent
-  },
-  {
-    path: 'welcome',
-    component: WelcomeComponent
   },
   {
     path:'dashboard',

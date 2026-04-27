@@ -1,0 +1,44 @@
+@use 'abstracts/mixins' as m;
+
+.welcome-container{
+    @include m.layout-flex(column, center, center, nowrap);
+
+    p:nth-of-type(2){
+        font-family: 'Fredoka',sans-serif;
+        font-size: 2rem;
+    }
+
+    img{
+        margin-bottom: 1rem;
+    }
+
+    @include m.respond-to(lg){
+        p:first-of-type{
+            font-size: 1.25rem;
+        }
+
+        p:nth-of-type(2){
+            font-size: 2.5rem;
+        }
+
+        img{
+            width: 12rem;
+            height: 14.5rem;
+        }
+    }
+
+    @include m.respond-to(xxl){
+        img{
+            width: 13rem;
+            height: 17.5rem;
+        }
+
+        p:first-of-type{
+            font-size: 1.5rem;
+        }
+
+        p:nth-of-type(2){
+            font-size: 2.75rem;
+        }
+    }
+}
