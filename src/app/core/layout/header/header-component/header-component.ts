@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SidebarService } from '../../../../shared/services/sidebar.service';
 
 @Component({
   selector: 'app-header-component',
@@ -7,11 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './header-component.scss',
 })
 export class HeaderComponent {
-  sidebarOpen = false;
-
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-
+  protected sidebar = inject(SidebarService);
 }

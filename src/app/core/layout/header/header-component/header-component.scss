@@ -42,7 +42,7 @@
             display: flex;
         }
 
-        @include m.respond-to(lg) {
+        @include m.respond-to(md) {
             display: none;
         }
     }
@@ -55,7 +55,7 @@
             display: none;
         }
 
-        @include m.respond-to(lg) {
+        @include m.respond-to(md) {
             display: flex;
         }
 

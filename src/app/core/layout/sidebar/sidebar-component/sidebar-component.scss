@@ -4,12 +4,20 @@
 .sidebar-container {
     width: 16rem;
     height: 24rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
     background-color: v.$primary-color;
     overflow-y: auto;
     border-radius: 0.25rem;
     filter: drop-shadow();
     
+    &.is-mobile {
+        transform: translateX(-200%);
+
+        &.is-open {
+            transform: translateX(0);
+
+        }
+    }
     .icon-sidebar {
         align-content: center;
         width: 1.25rem;
@@ -36,7 +44,7 @@
                 filter: drop-shadow();
                 cursor: pointer;
         
-                @include m.respond-to(lg) {
+                @include m.respond-to(md) {
                     display: none;
                 }
         
@@ -121,9 +129,29 @@
         }
     }
     
-    @include m.respond-to(lg) {
+    @include m.respond-to(md) {
         border-radius: 0;
         margin-inline: inherit;
         height: calc(100vh - 6rem);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(0);
     }
+}
+// --- Backdrop (Fondo oscuro al abrir en móvil) ---
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px);
+  animation: fadeIn 0.3s ease;
+  z-index: -1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

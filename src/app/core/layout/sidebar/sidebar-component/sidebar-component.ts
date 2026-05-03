@@ -1,22 +1,17 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { SidebarService } from '../../../../shared/services/sidebar.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar-component',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './sidebar-component.html',
   styleUrl: './sidebar-component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush 
 })
-export class SidebarComponent implements AfterViewInit  {
-  @ViewChild('mySidebar') mySidebar: ElementRef = {} as ElementRef;
-  sidebarOpen = false;
-  
-  ngAfterViewInit(): void {
-    this.mySidebar.nativeElement.style.display = 'block';
-  }
+export class SidebarComponent {
 
-  close() {
-    this.mySidebar.nativeElement.style.display = 'none';
-    this.sidebarOpen = false;
-  }
+  // Inyectamos el servicio (usamos protected para que el HTML lo vea)
+  protected sidebarService = inject(SidebarService);
 
 }

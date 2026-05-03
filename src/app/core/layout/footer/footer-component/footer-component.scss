@@ -6,12 +6,12 @@
     width: 100vw;
     height: 3rem;
     backdrop-filter: blur(5px);
+    background-color: v.$white-color;
 
-    @include m.respond-to(lg) {
+    @include m.respond-to(md) {
         @include m.layout-flex();
         
         p{
-            background-color: v.$white-color;
             color: v.$dark-color;
         }
         
