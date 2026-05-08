@@ -4,11 +4,16 @@ import { DashboardComponent } from './pages/dashboard/dashboard-component/dashbo
 import { HomeComponent } from './pages/home/home-component/home-component';
 import { FrontPageComponent } from './core/layout/front-page/front-page-component';
 import { WelcomeComponent } from './pages/welcome/welcome-component/welcome-component';
+import { RolComponent } from './pages/security/rol/rol-component/rol-component';
 
 export const routes: Routes = [
   {
     path: 'frontpage',
     component: FrontPageComponent
+  },
+  {
+    path:'login',
+    component:LoginComponent
   },
   {
     path: 'home',
@@ -21,8 +26,14 @@ export const routes: Routes = [
     ]
   },
   {
-    path:'login',
-    component:LoginComponent
+    path: 'security',
+    component: HomeComponent,
+    children:[
+      {
+        path:'rol',
+        component:RolComponent
+      }
+    ]
   },
   {
     path:'dashboard',
@@ -30,6 +41,6 @@ export const routes: Routes = [
   },
   {
     path:'**',
-    redirectTo:'frontpage'
+    redirectTo:'/frontpage'
   }
 ];
