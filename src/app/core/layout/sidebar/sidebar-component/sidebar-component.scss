@@ -6,10 +6,10 @@
     height: 24rem;
     padding-bottom: 1rem;
     background-color: v.$primary-color;
-    overflow-y: auto;
     border-radius: 0.25rem;
     filter: drop-shadow();
-    
+    font-size: 15px;
+        
     &.is-mobile {
         transform: translateX(-200%);
 
@@ -20,62 +20,70 @@
     }
     .icon-sidebar {
         align-content: center;
-        width: 1.25rem;
-        height: 1.25rem;
-        color:#fff;
-        margin-right: 0.75rem;
+        width: 1rem;
+        height: 1rem;
+        color: v.$white-color;
+        margin-right: 0.25rem;
+    }
+
+    .home-menu {
+        padding: 0.75rem;
+        list-style: none;
+        border-bottom: 1px solid v.$primary-active-color;
+        
+        li {
+            a{
+                color:#fff;
+                text-decoration: none;
+            }
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 1rem;
+            right: 0.75rem;
+            @include m.layout-flex();
+            align-self: flex-end;
+            border-radius: 50%;
+            padding: 0.25rem;
+            border: transparent;
+            color: v.$primary-hover-color;
+            background-color: v.$light-primary-color;
+            filter: drop-shadow();
+            cursor: pointer;
+    
+            @include m.respond-to(md) {
+                display: none;
+            }
+    
+            .icon-close {
+                width: 0.75rem;
+                height: 0.75rem;
+            }
+    
+            &:hover {
+                background-color: #fff;
+                color: v.$primary-color;
+                box-shadow: 0 0 5px v.$light-primary-color;
+            }
+    
+            &:active {
+                box-shadow: 0 0 2px v.$primary-active-color;
+            }
+        }
     }
 
     .menu{
+        width: 100%;
+        height: calc(100% - 1.75rem);
+        padding-bottom: 2rem;
+        overflow-y: auto;
+        z-index: 0;
+
         li {
-            list-style: none !important;
-        }
-        
-        .home-menu {
-            position: relative;
-
-            .btn-close {
-                position: absolute;
-                top:1rem;
-                right: 1rem;
-                @include m.layout-flex();
-                align-self: flex-end;
-                border-radius: 50%;
-                padding: 0.25rem;
-                border: transparent;
-                color: v.$primary-hover-color;
-                background-color: v.$light-primary-color;
-                filter: drop-shadow();
-                cursor: pointer;
-        
-                @include m.respond-to(md) {
-                    display: none;
-                }
-        
-                .icon-close {
-                    width: 0.75rem;
-                    height: 0.75rem;
-                }
-        
-                &:hover {
-                    background-color: #fff;
-                    color: v.$primary-color;
-                    box-shadow: 0 0 5px v.$light-primary-color;
-                }
-        
-                &:active {
-                    box-shadow: 0 0 2px v.$primary-active-color;
-                }
-            }
-            padding:1rem 1rem 1rem 1.5rem;
             list-style: none;
-
-            li {
-                a{
-                    color:#fff;
-                    text-decoration: none;
-                }
-            }
+            
+            
         }
         
         details{
@@ -84,83 +92,123 @@
             cursor: pointer;
 
             summary {
-                @include m.layout-flex(row, flex-start, center);
-                padding: 1rem 1rem 1rem 1.5rem;
                 list-style: none;
                 color:#fff;
+
+                .menu-item {
+                    @include m.layout-flex(row, flex-start, center);
+                    width: 100%;
+                    padding: 0.75rem;
+
+                    &:hover {
+                        background-color: v.$light-primary-color;
+                        color: v.$primary-color;
+                        box-shadow: 0 0 5px v.$light-primary-color;
+
+                        svg {
+                            color: v.$primary-color;
+                        }
+                    }
+
+                    &::after {
+                        margin-left: auto;
+                        content: "\203A";
+                        font-size: 1.75rem;
+                        font-weight: 400;
+                        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                        line-height: 0;
+                    }
+                }
             }
 
-            summary::after {
-                margin-left: auto;
-                content: "\203A";
-                font-size: 2.25rem;
-                font-weight: lighter; 
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                line-height: 0;
+            &[open] summary .menu-item::after {
+                transform: rotate(90deg);
+            }
+
+            // Asegurar que cuando esté cerrado vuelva a la posición original
+            summary:not([open]) .menu-item::after {
+                transform: rotate(0deg);
             }
 
             .security-menu {
                 list-style: none;
-                
+
                 li {
-                    padding-left: 3.5rem;
-                    padding-block: 0.5rem;
                     list-style: none;
-                    
+
                     .menu-item {
                         @include m.layout-flex(row, flex-start, center);
                         width: 100%;
-                        padding: 0.75rem;
-                        border-radius: 0.25rem;
+                        padding-block: 0.75rem;
+                        padding-left: 1.75rem;
                     }
-                    
+
                     &:hover > .menu-item {
                         background-color: v.$white-color;
-                        
+
                         svg, a {
                             color: v.$primary-active-color;
                         }
                     }
-                    
-                    &.has-submenu-hover > .menu-item {
-                        background-color: v.$white-color;
-                        
-                        svg, a {
-                            color: v.$primary-active-color;
-                        }
-                    }
-                    
+
                     a{
                         text-decoration: none;
                         color:#fff;
                     }
 
-                    .submenu {
-                        list-style: none;
-                        padding-left: 0;
-                        margin-top: 0.25rem;
-                        width: 100%;
-                        
-                        li {
-                            padding-left: 2rem;
-                            padding-block: 0.5rem;
-                            list-style: none;
-                            
+                    details {
+                        summary {
                             .menu-item {
                                 @include m.layout-flex(row, flex-start, center);
                                 width: 100%;
-                                padding: 0.75rem;
-                                border-radius: 0.25rem;
+                                padding-block: 0.75rem;
+                                padding-left: 1.75rem;
+
+                                &:hover {
+                                    background-color: v.$white-color;
+
+                                    svg, a {
+                                        color: v.$primary-active-color;
+                                    }
+                                }
+
+                                &::after {
+                                    margin-left: auto;
+                                    content: "\203A";
+                                    font-size: 1.75rem;
+                                    font-weight: 400;
+                                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                                    line-height: 0;
+                                }
                             }
-                            
+                        }
+
+                        &[open] summary .menu-item::after {
+                            transform: rotate(90deg);
+                        }
+                    }
+
+                    .submenu {
+                        list-style: none;
+                        width: 100%;
+
+                        li {
+                            list-style: none;
+
+                            .menu-item {
+                                @include m.layout-flex(row, flex-start, center);
+                                width: 100%;
+                                padding-left: 3rem;
+                            }
+
                             &:hover > .menu-item {
-                                background-color: v.$light-primary-color;
-                                
+                                background-color: v.$white-color;
+
                                 svg, a {
                                     color: v.$primary-active-color;
                                 }
                             }
-                            
+
                             a{
                                 text-decoration: none;
                                 color:#fff;
@@ -169,13 +217,9 @@
                     }
                 }
             }
-
-        }
-        details[open] summary::after {
-            transform: rotate(90deg); 
         }
     }
-    
+
     @include m.respond-to(md) {
         border-radius: 0;
         margin-inline: inherit;
@@ -183,8 +227,11 @@
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         transform: translateX(0);
+        z-index: -1;
+
     }
 }
+
 // --- Backdrop (Fondo oscuro al abrir en móvil) ---
 .sidebar-backdrop {
   position: fixed;

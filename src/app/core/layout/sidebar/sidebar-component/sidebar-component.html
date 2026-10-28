@@ -1,60 +1,68 @@
 <aside class="sidebar-container" [ngClass]="{'is-open': sidebarService.isOpen(), 'is-mobile': sidebarService.isMobile()}">
+    <ul class="home-menu">
+        <button class="btn-close" (click)="sidebarService.close()">
+            <svg class="icon-close"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <g fill="currentColor" fill-rule="evenodd">
+                    <path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
+                    <path fill="currentColor" d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z"/>
+                </g>
+            </svg>
+        </button>
+        <li class="">
+            <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/>
+                <path fill="currentColor" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/>
+            </svg>
+            <a routerLink="/home/welcome">Inicio</a>
+        </li>
+    </ul>
     <nav class="menu" >
-        <ul class="home-menu">
-            <button class="btn-close" (click)="sidebarService.close()">
-                <svg class="icon-close"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g fill="currentColor" fill-rule="evenodd">
-                        <path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
-                        <path fill="currentColor" d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z"/>
-                    </g>
-                </svg>
-            </button>
-            <li class="">
-                <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path fill="currentColor" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/>
-                    <path fill="currentColor" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/>
-                </svg>
-                <a routerLink="/home/welcome">Inicio</a>
-            </li>
-        </ul>
         
         @if (userData && userData.modulos) {
             @for (modulo of userData.modulos; track modulo.id_modulo) {
                 @if (modulo.estado && getFilteredMenus(modulo.menus).length > 0) {
-                    <details open>
+                    <details>
                         <summary>
-                            <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M6 8c0-2.21 1.79-4 4-4s4 1.79 4 4s-1.79 4-4 4s-4-1.79-4-4m6 10.2c0-.96.5-1.86 1.2-2.46v-.24c0-.39.07-.76.18-1.12c-1.03-.24-2.17-.38-3.38-.38c-4.42 0-8 1.79-8 4v2h10zm10 .1v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V17c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V17h3z"/>
-                            </svg>
-                            {{ modulo.nombre_modulo }}
+                            <div class="menu-item">
+                                <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M6 8c0-2.21 1.79-4 4-4s4 1.79 4 4s-1.79 4-4 4s-4-1.79-4-4m6 10.2c0-.96.5-1.86 1.2-2.46v-.24c0-.39.07-.76.18-1.12c-1.03-.24-2.17-.38-3.38-.38c-4.42 0-8 1.79-8 4v2h10zm10 .1v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V17c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V17h3z"/>
+                                </svg>
+                                <span>{{ modulo.nombre_modulo | titlecase }}</span>
+                            </div>
                         </summary>
                         <ul class="security-menu">
                             @for (menu of getLevel1Menus(modulo.menus); track menu.id_menu) {
                                 <li [attr.data-menu-id]="menu.id_menu">
-                                    <div class="menu-item">
-                                        <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path fill="currentColor" [attr.d]="getMenuIcon(menu.nombre_menu)"/>
-                                        </svg>
-                                        <a [routerLink]="menu.ruta">{{ menu.nombre_menu }}</a>
-                                    </div>
-                                    
                                     @if (getLevel2Menus(modulo.menus, menu.id_menu).length > 0) {
-                                        <ul class="submenu" 
-                                            (mouseenter)="onSubmenuHover(menu.id_menu, true)" 
-                                            (mouseleave)="onSubmenuHover(menu.id_menu, false)"
-                                            (focusin)="onSubmenuHover(menu.id_menu, true)"
-                                            (focusout)="onSubmenuHover(menu.id_menu, false)">
-                                            @for (submenu of getLevel2Menus(modulo.menus, menu.id_menu); track submenu.id_menu) {
-                                                <li>
-                                                    <div class="menu-item">
-                                                        <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" [attr.d]="getMenuIcon(submenu.nombre_menu)"/>
-                                                        </svg>
-                                                        <a [routerLink]="submenu.ruta">{{ submenu.nombre_menu }}</a>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
+                                        <details close>
+                                            <summary>
+                                                <div class="menu-item">
+                                                    <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" [attr.d]="getMenuIcon(menu.nombre_menu)"/>
+                                                    </svg>
+                                                    <a [routerLink]="menu.ruta" (click)="closeSidebarOnMobile()">{{ menu.nombre_menu | subtitulo }}</a>
+                                                </div>
+                                            </summary>
+                                            <ul class="submenu" [attr.data-menu-id]="menu.id_menu">
+                                                @for (submenu of getLevel2Menus(modulo.menus, menu.id_menu); track submenu.id_menu) {
+                                                    <li>
+                                                        <div class="menu-item">
+                                                            <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                <path fill="currentColor" [attr.d]="getMenuIcon(submenu.nombre_menu)"/>
+                                                            </svg>
+                                                            <a [routerLink]="submenu.ruta" (click)="closeSidebarOnMobile()">{{ submenu.nombre_menu | titlecase }}</a>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </details>
+                                    } @else {
+                                        <div class="menu-item">
+                                            <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path fill="currentColor" [attr.d]="getMenuIcon(menu.nombre_menu)"/>
+                                            </svg>
+                                            <a [routerLink]="menu.ruta" (click)="closeSidebarOnMobile()">{{ menu.nombre_menu | subtitulo }}</a>
+                                        </div>
                                     }
                                 </li>
                             }
