@@ -1,11 +1,11 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SidebarService {
   
-  private mediaQuery = window.matchMedia('(max-width: 767px)');
+  private readonly mediaQuery = window.matchMedia('(max-width: 767px)');
 
   // Signal que indica si estamos en móvil
   isMobile = signal(this.mediaQuery.matches);

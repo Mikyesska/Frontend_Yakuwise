@@ -1,0 +1,121 @@
+<p mat-dialog-title class="modal-title">
+    {{ isReadOnly() ? 'Ver cliente' : (isEditMode() ? 'Editar cliente' : 'Agregar cliente') }}
+    <button mat-icon-button class="close-button" matTooltip="Cerrar" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</p>
+<mat-dialog-content>
+    <form (submit)="onSave($event)">
+        <div class="customer-form">
+            <div class="form-input-container">
+                <label for="customerName" class="label-input-container required-field">Nombre:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="customerName" class="text-mayusc" [formField]="customerForm.nombre_cliente" [errorStateMatcher]="customerNameError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'nombre_cliente')" placeholder="Ej. Cerro Verde S.A.C." soloLetras>
+                </mat-form-field>
+                @if (customerNameError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of customerNameError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="customerEmail" class="label-input-container required-field">Email:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="customerEmail" [formField]="customerForm.email" [errorStateMatcher]="customerEmailError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'email')" placeholder="Ej. contacto@empresa.com">
+                </mat-form-field>
+                @if (customerEmailError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of customerEmailError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="customerRuc" class="label-input-container required-field">Registro único de contribuyente:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="customerRuc" [formField]="customerForm.ruc_cliente" [errorStateMatcher]="customerRucError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'ruc_cliente')" placeholder="Ej.  20123456789" soloNumeros>
+                </mat-form-field>
+                @if (customerRucError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of customerRucError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="customerPhone" class="label-input-container required-field">Teléfono:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="customerPhone" [formField]="customerForm.telefono" [errorStateMatcher]="customerPhoneError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'telefono')" placeholder="Ej. 923456789">
+                </mat-form-field>
+                @if (customerPhoneError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of customerPhoneError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="customerAddress" class="label-input-container required-field">Dirección:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="customerAddress" class="text-mayusc" [formField]="customerForm.direccion" [errorStateMatcher]="customerAddressError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'direccion')" placeholder="Ej. Av. Principal 123, Lima">
+                </mat-form-field>
+                @if (customerAddressError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of customerAddressError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="state" class="label-input-container custom-switch required-field">Estado:</label>
+                <mat-slide-toggle id="state" [checked]="customerModel().estado ==='Activo'" (change)="customerModel.update(m => ({...m, estado: $event.checked ? 'Activo' : 'Inactivo'}))" [disabled]="isReadOnly()">
+                    <p class="txt-switch">
+                        El cliente está <span class="state-text">&nbsp;{{customerModel().estado.toLowerCase()}}.</span>
+                    </p>
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <mat-dialog-actions align="end">
+            @if (!isReadOnly()) {
+                <button mat-button mat-dialog-close>Cancelar</button>
+                <button mat-button [disabled]="isSaving()">
+                    {{ isSaving() ? 'Guardando...' : (isEditMode() ? 'Actualizar' : 'Guardar') }}
+                </button>
+            }
+            @else {
+                <button mat-button type="button" mat-dialog-close>Cerrar</button>
+            }
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

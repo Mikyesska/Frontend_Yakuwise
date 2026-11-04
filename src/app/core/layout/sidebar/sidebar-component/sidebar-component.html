@@ -21,20 +21,20 @@
         @if (userData && userData.modulos) {
             @for (modulo of userData.modulos; track modulo.id_modulo) {
                 @if (modulo.estado && getFilteredMenus(modulo.menus).length > 0) {
-                    <details>
+                    <details open>
                         <summary>
                             <div class="menu-item">
                                 <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path fill="currentColor" d="M6 8c0-2.21 1.79-4 4-4s4 1.79 4 4s-1.79 4-4 4s-4-1.79-4-4m6 10.2c0-.96.5-1.86 1.2-2.46v-.24c0-.39.07-.76.18-1.12c-1.03-.24-2.17-.38-3.38-.38c-4.42 0-8 1.79-8 4v2h10zm10 .1v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V17c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V17h3z"/>
                                 </svg>
-                                <span>{{ modulo.nombre_modulo | titlecase }}</span>
+                                <span>{{ modulo.nombre_modulo | subtitulo }}</span>
                             </div>
                         </summary>
                         <ul class="security-menu">
                             @for (menu of getLevel1Menus(modulo.menus); track menu.id_menu) {
                                 <li [attr.data-menu-id]="menu.id_menu">
                                     @if (getLevel2Menus(modulo.menus, menu.id_menu).length > 0) {
-                                        <details close>
+                                        <details open>
                                             <summary>
                                                 <div class="menu-item">
                                                     <svg class="icon-sidebar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -43,6 +43,9 @@ export class ApiConfigService {
   // Endpoint específico para rol-menus
   readonly rolMenusEndpoint = signal(`${this.baseUrl()}/security/rol-menus/`);
 
+  // Endpoint específico para clientes
+  readonly clientesEndpoint = signal(`${this.baseUrl()}/api/clientes/`);
+
   constructor() {}
 
   // Método para obtener la URL base

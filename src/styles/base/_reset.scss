@@ -483,6 +483,7 @@ body {
 // Estilos del input buscador
 .custom-search-field {
     width: 100% !important;
+    margin-top: 0.75rem;
 }
 
 // Estilos de los input
@@ -611,4 +612,15 @@ body {
 
 .mat-mdc-option .mdc-list-item__primary-text {
     font-size: 14px;
+}
+
+// Estilos de modal clientes
+.custom-responsive-modal-customer {
+    width: 25rem;
+    max-width: 100vw !important;
+    height: auto;
+    
+    @include m.respond-to(md) {
+        width: 42rem;
+    }
 }

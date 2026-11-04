@@ -19,7 +19,8 @@
     .title-container {
         background-color: v.$white-color;
         border-radius: 0.5rem;
-        padding: 1.25rem;
+        padding-block: 1rem;
+        padding-inline: 1.25rem;
         flex-shrink: 0;
         @include m.layout-flex(column, center, flex-start, nowrap);
 
@@ -77,7 +78,7 @@
         @include m.layout-flex(column, flex-start, flex-start, nowrap);
 
         .buttons-container{
-            margin-top: 0.5rem;
+            margin-top: 0.25rem;
             align-self: stretch;
             flex-shrink: 0;
             @include m.layout-flex(row, flex-end, flex-start, nowrap);
