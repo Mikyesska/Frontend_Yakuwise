@@ -18,10 +18,11 @@ import { MenuResponse, MenusListResponse, MenuData } from '../../../../shared/in
 import { AssignRolesModalComponent, AssignRolesData } from '../../modals/assign-roles-modal/assign-roles-modal.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { SubtitlePipe } from '../../../../shared/pipes/subtitle-pipe';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-menu-component',
-  imports: [ButtonComponent, RouterLink, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, FormsModule, MatIconModule, MatButtonModule, MatChipsModule, MatBadgeModule, SubtitlePipe],
+  imports: [ButtonComponent, RouterLink, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, FormsModule, MatIconModule, MatButtonModule, MatChipsModule, MatBadgeModule, SubtitlePipe, UpperCasePipe],
   templateUrl: './menu-component.html',
   styleUrl: './menu-component.scss',
 })

@@ -16,20 +16,24 @@
     </div>
     <div class="body-container">
         <div class="buttons-container">
-            <app-button-component type="submit" label="Nuevo Menú" icon="plus" color="primary" (click)="createMenu()" onKeyPress />
+            <app-button-component type="submit" label="Nuevo menú" icon="plus" color="primary" (click)="createMenu()" onKeyPress />
         </div>
-        <div class="search-container">
-            <label for="buscarMenu">Buscar menú:</label>
-            <mat-form-field class="custom-search-field" appearance="outline">
-                <input matInput id="buscarMenu" [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" placeholder="Ej. Dashboard" 
-                    #input>
-                @if (searchTerm()) {
-                    <button mat-icon-button matSuffix class="small-clear-btn" (click)="onSearchChange(''); input.value=''" aria-label="Limpiar">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                }
-            </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="custom-search-field">
+            <input matInput id="menuSearch" [ngModel]="searchTerm()" aria-label="Buscar menu" (ngModelChange)="onSearchChange($event)" placeholder="Buscar menu" 
+                #input>
+            @if (!searchTerm()) {
+                <button type="button" matIconButton matSuffix class="search-icon-btn" aria-label="Buscar menu" (click)="onSearchChange(''); input.value=''" aria-label="Limpiar" disabled>
+                    <mat-icon>search</mat-icon>
+                </button>
+            }
+            @else {
+                <button type="button" matIconButton matSuffix class="clear-search-btn"
+                    (click)="onSearchChange(''); input.value=''" aria-label="Limpiar búsqueda">
+                    <mat-icon>close</mat-icon>
+                </button>
+            }
+        </mat-form-field>
+        
         <section class="table-container mat-elevation-z8">
             <table mat-table [dataSource]="displayedMenus()" matSort (matSortChange)="onSortChange($event)" matSortDirection="desc">
                 <ng-container matColumnDef="id_menu">
@@ -39,17 +43,21 @@
                 <ng-container matColumnDef="nombre_menu">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Menú</th>
                     <td mat-cell *matCellDef="let element">
-                        <mat-chip-set>
-                            <mat-chip class="chips-nombre-menu" [matBadge]="element.nivel" matBadgeSize="large" matBadgeOverlap="false">
-                                {{element.nombre_menu | subtitulo}}
-                            </mat-chip>
-                        </mat-chip-set>
+                        @if(element.nivel !== 2){
+                            {{element.nombre_menu | uppercase}}
+                        }
+                        @else {
+                            <div class="chips-nombre-menu" [matBadge]="element.nivel" matBadgeSize="large" matBadgeOverlap="false">
+                                {{element.nombre_menu | uppercase}}&nbsp;
+                            </div>
+                        }
+                        
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="id_depende">
                     <th mat-header-cell *matHeaderCellDef>Menú padre</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ getMenuPadreName(element.id_depende) }}
+                        {{ getMenuPadreName(element.id_depende) | uppercase }}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="nombre_modulo">
