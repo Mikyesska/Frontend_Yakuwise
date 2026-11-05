@@ -18,18 +18,21 @@
         <div class="buttons-container">
             <app-button-component type="submit" label="Nuevo cliente" icon="plus" color="primary" (click)="createCustomer()" onKeyPress />
         </div>
-        <mat-form-field appearance="outline" class="custom-search-field">
-            <input matInput id="customerSearch"  aria-label="Buscar cliente" [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" placeholder="Buscar cliente" 
-                #input>
-                <mat-icon matSuffix class="search-icon">search</mat-icon>
-            @if (searchTerm()) {
-                <button mat-icon-button matSuffix class="small-clear-btn" (click)="onSearchChange(''); input.value=''" aria-label="Limpiar">
-                    <mat-icon matSuffix [hidden]="!searchTerm()">close</mat-icon>
+        <mat-form-field appearance="outline" class="custom-search-field" subscriptSizing="dynamic">
+            <input matInput id="customerSearch" aria-label="Buscar cliente" [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" placeholder="Buscar cliente" #input>
+            @if (!searchTerm()) {
+                <button type="button" matIconButton matSuffix class="search-icon-btn" aria-label="Buscar" disabled >
+                    <mat-icon>search</mat-icon>
+                </button>
+            }
+            @else {
+                <button type="button" matIconButton matSuffix class="clear-search-btn" (click)="onSearchChange(''); input.value=''" aria-label="Limpiar búsqueda">
+                    <mat-icon>close</mat-icon>
                 </button>
             }
         </mat-form-field>
         <section class="table-container mat-elevation-z8">
-            <table mat-table [dataSource]="clientes()" matSort (matSortChange)="onSortChange($event)">
+            <table mat-table [dataSource]="clientes()" matSort (matSortChange)="onSortChange($event)" matSortDirection="desc">
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Nº</th>
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>

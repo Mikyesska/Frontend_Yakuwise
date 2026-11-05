@@ -482,8 +482,16 @@ body {
 
 // Estilos del input buscador
 .custom-search-field {
-    width: 100% !important;
-    margin-top: 0.75rem;
+    width: 100%;
+    margin-block: 0.75rem;
+
+    search-icon-btn {
+        color: v.$primary-color;
+    }
+
+    .clear-search-btn {
+        color: v.$primary-color;
+    }
 }
 
 // Estilos de los input

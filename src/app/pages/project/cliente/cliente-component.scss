@@ -1,17 +1,6 @@
 @use 'abstracts/variables' as v;
 @use 'abstracts/mixins'as m;
 
-.search-and-button-container {
-    display:flex;
-    justify-content: space-evenly;
-    border:1px solid red;
-    column-gap: 1rem;
-    width: 100%;
-}
-.search-icon {
-    color: v.$gray-400;
-}
-
 th.mat-column-acciones,
 th.mat-column-estado {
     text-align: center;

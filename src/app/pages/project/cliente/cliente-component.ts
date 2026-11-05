@@ -59,9 +59,9 @@ export class ClienteComponent {
   }
 
   onSortChange(sort: Sort): void { 
-    this.activeSort.set(sort); 
-    this.pageIndex.set(1); 
-    this.loadCustomers(); 
+    this.activeSort.set(sort);
+    this.pageIndex.set(1);
+    this.loadCustomers();
   }
   
   loadCustomers(): void {
