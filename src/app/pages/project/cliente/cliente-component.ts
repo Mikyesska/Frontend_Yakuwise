@@ -18,7 +18,7 @@ import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cliente-component',
-  imports: [RouterLink, MatButtonModule, ButtonComponent, MatInputModule, MatFormFieldModule, MatButtonModule, MatIconModule, FormsModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule , UpperCasePipe],
+  imports: [RouterLink, MatButtonModule, ButtonComponent, MatInputModule, MatFormFieldModule, MatButtonModule, MatIconModule, FormsModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, UpperCasePipe],
   templateUrl: './cliente-component.html',
   styleUrl: './cliente-component.scss',
 })

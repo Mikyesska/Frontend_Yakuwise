@@ -25,9 +25,9 @@
             <input matInput id="customerSearch" aria-label="Buscar cliente" [ngModel]="searchTerm()"
                 (ngModelChange)="onSearchChange($event)" placeholder="Buscar cliente" #input>
             @if (!searchTerm()) {
-            <button type="button" matIconButton matSuffix class="search-icon-btn" aria-label="Buscar cliente" disabled>
-                <mat-icon>search</mat-icon>
-            </button>
+                <button type="button" matIconButton matSuffix class="search-icon-btn" aria-label="Buscar cliente" disabled>
+                    <mat-icon>search</mat-icon>
+                </button>
             }
             @else {
                 <button type="button" matIconButton matSuffix class="clear-search-btn"

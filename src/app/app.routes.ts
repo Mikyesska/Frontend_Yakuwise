@@ -11,6 +11,7 @@ import { MenuComponent } from './pages/security/menu/menu-component/menu-compone
 import { UpdatePasswordComponent } from './features/auth/pages/update-password/update-password-component/update-password-component';
 import { authGuard } from './core/guards/auth.guard';
 import { ClienteComponent } from './pages/project/cliente/cliente-component';
+import { ContactoComponent } from './pages/project/contacto/contacto-component';
 
 export const routes: Routes = [
   {
@@ -69,10 +70,10 @@ export const routes: Routes = [
         path:'clientes',
         component:ClienteComponent
       },
-      // {
-      //   path:'usuarios',
-      //   component:UsuarioComponent
-      // },
+      {
+        path:'contactos',
+        component:ContactoComponent
+      },
       // {
       //   path:'modulos',
       //   component:ModuloComponent

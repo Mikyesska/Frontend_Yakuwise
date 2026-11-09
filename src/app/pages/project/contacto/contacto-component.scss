@@ -1,0 +1,41 @@
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins'as m;
+
+th.mat-column-accion,
+th.mat-column-estado {
+    text-align: center;
+}
+
+.mat-column-id {
+    width: 3%;
+}
+
+.mat-column-nombre_contacto{
+    width: 30%;
+}
+
+.mat-column-area{
+    width: 5%;
+}
+
+.mat-column-nombre_cliente {
+    width: 40%;
+}
+
+.mat-column-email_contacto {
+    width: 7%;
+}
+
+.mat-column-telefono_contacto {
+    width: 5%;
+}
+
+.mat-column-estado {
+    text-align:center;
+    width: 5%;
+}
+
+.mat-column-accion{
+    text-align:center;
+    width: 5%;
+}

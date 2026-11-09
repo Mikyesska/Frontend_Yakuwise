@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiConfigService {
   // URL base del servidor API
   private readonly baseUrl = signal('http://127.0.0.1:8000');
@@ -45,6 +46,9 @@ export class ApiConfigService {
 
   // Endpoint específico para clientes
   readonly clientesEndpoint = signal(`${this.baseUrl()}/api/clientes/`);
+
+  // Endpoint específico para contactos
+  readonly contactosEndpoint = signal(`${this.baseUrl()}/api/contactos/`);
 
   constructor() {}
 
