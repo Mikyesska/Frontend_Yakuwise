@@ -20,7 +20,7 @@ import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-contacto-component',
-  imports: [RouterLink, MatButtonModule, ButtonComponent, MatInputModule, MatFormFieldModule, MatButtonModule, MatIconModule, FormsModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, UpperCasePipe],
+  imports: [RouterLink, MatButtonModule, ButtonComponent, MatInputModule, MatFormFieldModule, MatIconModule, FormsModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, UpperCasePipe],
   templateUrl: './contacto-component.html',
   styleUrl: './contacto-component.scss',
 })
@@ -34,13 +34,14 @@ export class ContactoComponent implements AfterViewInit {
   private readonly DEFAULT_ORDERING = 'id_contacto';
 
   readonly dataSource = new MatTableDataSource<ContactData>([]);
-  readonly isLoading = signal<boolean>(false);
   readonly activeSort = signal<Sort>({ active: '', direction: '' });
   readonly pageSize = signal<number>(this.DEFAULT_PAGE_SIZE);
   readonly searchTerm = signal<string>('');
   readonly pageIndex = signal<number>(1);
   readonly totalContacts = signal<number>(0);
   readonly clientesMap = signal<Map<number, string>>(new Map());
+  private readonly allContacts = signal<ContactData[]>([]);
+  private readonly estadoFilter = signal<boolean | null>(null);
   
   readonly displayedColumns: string[] = ['id', 'nombre_contacto', 'area', 'nombre_cliente', 'email_contacto', 'telefono_contacto', 'estado', 'accion'];
 
@@ -55,28 +56,31 @@ export class ContactoComponent implements AfterViewInit {
   }
   
   onSearchChange(value: string): void {
+    const term = (value ?? '').trim().toLowerCase();
     this.searchTerm.set(value ?? '');
+    this.estadoFilter.set(this.resolveEstadoFilter(term));
     this.pageIndex.set(1);
     this.loadContacts();
   }
 
-  openContactModal(contact: ContactData | undefined, isReadOnly: boolean): void {
-    this.dialog.open(ContactModal, {
-      height: 'auto',
-      data: contact ? { ...contact, isReadOnly}: undefined,
+  openContactModal(contact?: ContactData ): void {
+    const dialogRef = this.dialog.open(ContactModal, {
+      data: contact,
       disableClose: true,
       panelClass: 'custom-responsive-modal-contact'
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadContacts();
+      }
+    });
   }
 
-  createContact(contact?: ContactData): void {
-    this.openContactModal(contact, false);
+  createContact(contact: ContactData): void {
+    this.openContactModal(contact);
   }
   
-  viewContact(contact: ContactData):void {
-    this.openContactModal(contact, true);
-  }
-
   onSortChange(sort: Sort): void {
     this.activeSort.set(sort);
     this.pageIndex.set(1);
@@ -90,7 +94,7 @@ export class ContactoComponent implements AfterViewInit {
   }
 
   loadClientes(): void {
-    this.clienteService.getCustomers({ page_size: 10 }).subscribe({
+    this.clienteService.getCustomers({ page_size: 1000 }).subscribe({
       next: (response) => {
         const map = new Map<number, string>();
         response.results.forEach(cliente => {
@@ -109,12 +113,14 @@ export class ContactoComponent implements AfterViewInit {
   }
 
   loadContacts(): void {
-    this.isLoading.set(true);
+    if (this.searchTerm()) {
+      this.loadAllContactsForSearch();
+      return;
+    }
+
     const ordering = this.buildOrdering();
-    const searchParam = this.buildSearchParam();
 
     this.contactService.getContacts({
-      search: searchParam,
       ordering: ordering,
       page: this.pageIndex(),
       page_size: this.pageSize()
@@ -124,45 +130,77 @@ export class ContactoComponent implements AfterViewInit {
     });
   }
 
-  private handleContactsResponse(response: ContactsListResponse): void {
-    const mappedContacts = response.results
-      .map(contact => this.mapFromApiResponse(contact))
-      .filter((contact): contact is ContactData => contact !== null);
-
-    this.dataSource.data = mappedContacts;
-    this.isLoading.set(false);
-    this.totalContacts.set(response.count);
-    console.log('Mapped contacts:', mappedContacts);
+  private loadAllContactsForSearch(): void {
+    this.contactService.getContacts({
+      ordering: this.buildOrdering(),
+      page: 1,
+      page_size: 100
+    }).subscribe({
+      next: (response: ContactsListResponse) => {
+        const contacts = response.results.map(contact => this.mapFromApiResponse(contact));
+        this.allContacts.set(contacts);
+        this.applyLocalPagination();
+      },
+      error: () => this.handleLoadError()
+    });
   }
 
-  private mapFromApiResponse(apiResponse: ContactResponse): ContactData | null {
-    const id_cliente = (apiResponse as any).id_cliente || 0;
+  private applyLocalPagination(): void {
+    const estadoFilter = this.estadoFilter();
+    const search = this.searchTerm().toLowerCase().trim();
+
+    let filtered = this.allContacts();
+    if (estadoFilter !== null) {
+      filtered = filtered.filter(contact => contact.estado === estadoFilter);
+    } else if (search) {
+      filtered = filtered.filter(contact =>
+        (contact.nombre_contacto ?? '').toLowerCase().includes(search) ||
+        (contact.area ?? '').toLowerCase().includes(search) ||
+        (contact.email_contacto ?? '').toLowerCase().includes(search) ||
+        (contact.telefono_contacto ?? '').toLowerCase().includes(search) ||
+        (contact.nombre_cliente ?? '').toLowerCase().includes(search) ||
+        contact.id_contacto?.toString().includes(search)
+      );
+    }
+
+    this.totalContacts.set(filtered.length);
+    const startIndex = (this.pageIndex() - 1) * this.pageSize();
+    this.dataSource.data = filtered.slice(startIndex, startIndex + this.pageSize());
+  }
+
+  private handleContactsResponse(response: ContactsListResponse): void {
+    this.dataSource.data = response.results.map(contact => this.mapFromApiResponse(contact));
+    this.totalContacts.set(response.count);
+  }
+
+  private mapFromApiResponse(apiResponse: ContactResponse): ContactData {
+    const id_cliente = apiResponse.id_cliente;
     const clientes = this.clientesMap();
     const nombre_cliente = clientes.get(id_cliente) || 'Cliente ID: ' + id_cliente;
 
     return {
       id_contacto: apiResponse.id_contacto,
       area: apiResponse.area,
+      nombres: apiResponse.nombres,
+      apellido_paterno: apiResponse.apellido_paterno,
+      apellido_materno: apiResponse.apellido_materno,
       nombre_contacto: `${apiResponse.nombres} ${apiResponse.apellido_paterno} ${apiResponse.apellido_materno}`,
       email_contacto: apiResponse.email_contacto,
       telefono_contacto: apiResponse.telefono_contacto,
-      estado: this.formatEstado(apiResponse.estado),
+      estado: apiResponse.estado,
       id_cliente: id_cliente,
       nombre_cliente: nombre_cliente
     };
   }
 
-  private formatEstado(estado: boolean): string {
-    return estado ? 'Activo' : 'Inactivo';
+  private resolveEstadoFilter(term: string): boolean | null {
+    if (term.startsWith('inac')) return false;
+    if (term.startsWith('act')) return true;
+    return null;
   }
 
   private handleLoadError(): void {
     this.alertService.error("Error al cargar contactos. Por favor, inténtelo de nuevo.");
-    this.isLoading.set(false);
-  }
-
-  private buildSearchParam(): string | undefined {
-    return this.searchTerm() || undefined;
   }
 
   private buildOrdering(): string {

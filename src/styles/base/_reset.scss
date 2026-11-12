@@ -203,7 +203,7 @@ body {
     .mat-mdc-dialog-actions {
         padding:0;
         margin-bottom:1rem;
-        margin-top:1rem;
+        margin-top:0;
         
         .mat-mdc-button {
             border: 1px solid transparent;
@@ -633,3 +633,19 @@ body {
         width: 42rem;
     }
 }
+
+// Estilos de modal contactos
+.custom-responsive-modal-contact {
+    width: 25rem;
+    max-width: 100vw;
+    height: auto;
+    
+    @include m.respond-to(md) {
+        width: 50rem;
+        
+        .mat-mdc-dialog-content {
+            max-height: max-content;
+        }
+    }
+}
+

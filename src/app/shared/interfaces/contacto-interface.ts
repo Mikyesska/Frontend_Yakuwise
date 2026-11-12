@@ -1,13 +1,19 @@
 export interface ContactData {
     id_contacto?: number;
     area: string;
-    nombre_contacto: string;
+    nombre_contacto?: string;
+    nombres: string;
+    apellido_paterno: string;
+    apellido_materno: string;
     email_contacto: string;
     telefono_contacto: string;
-    estado: string;
+    estado: boolean;
     id_cliente: number;
-    nombre_cliente: string;
+    nombre_cliente?: string;
 }
+
+export interface CreateContactRequest extends Omit<ContactData, 'nombre_contacto' | 'nombre_cliente'> {}
+
 export interface ContactResponse {
   id_contacto: number;
   area: string;
@@ -17,7 +23,8 @@ export interface ContactResponse {
   email_contacto: string;
   telefono_contacto: string;
   estado: boolean;
-  clientes: Array<{ id_cliente: number; nombre_cliente: string }>;
+  id_cliente: number;
+  nombre_cliente: string;
 }
 
 export interface ContactsListResponse {

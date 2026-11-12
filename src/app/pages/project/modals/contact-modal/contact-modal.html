@@ -1,1 +1,157 @@
-<p>contact-modal works!</p>
+<p mat-dialog-title class="modal-title">
+    {{ isEditMode() ? 'Editar contacto' : 'Agregar contacto' }}
+    <button mat-icon-button class="close-button" matTooltip="Cerrar" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</p>
+<mat-dialog-content>    
+    <form (submit)="onSave($event)">
+        <div class="contact-form">
+            <div class="form-input-container">
+                <label for="contactName" class="label-input-container required-field">Nombres:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput [formField]="contactForm.nombres" id="contactName" class="text-mayusc" placeholder="Ej. Juan Pérez" [errorStateMatcher]="contactNameError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'nombres')"  soloLetras>
+                </mat-form-field>
+                @if (contactNameError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactNameError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="paternalSurname" class="label-input-container required-field">Apellido Paterno:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="paternalSurname" class="text-mayusc" [formField]="contactForm.apellido_paterno" [errorStateMatcher]="contactPaternalSurnameError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'apellido_paterno')" placeholder="Ej. Pérez" soloLetras>
+                </mat-form-field>
+                @if (contactPaternalSurnameError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactPaternalSurnameError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="maternalSurname" class="label-input-container required-field">Apellido Materno:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="maternalSurname" class="text-mayusc" [formField]="contactForm.apellido_materno" [errorStateMatcher]="contactMaternalSurnameError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'apellido_materno')" placeholder="Ej. Gómez" soloLetras>
+                </mat-form-field>
+                @if (contactMaternalSurnameError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactMaternalSurnameError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="area" class="label-input-container required-field">Área:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="area" class="text-mayusc" [formField]="contactForm.area" [errorStateMatcher]="contactAreaError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'area')" placeholder="Ej. Ventas" soloLetras>
+                </mat-form-field>
+                @if (contactAreaError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactAreaError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="email" class="label-input-container required-field">Email:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="email" [formField]="contactForm.email_contacto" [errorStateMatcher]="contactEmailError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'email_contacto')" placeholder="Ej. juan.perez@example.com">
+                </mat-form-field>
+                @if (contactEmailError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactEmailError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="phone" class="label-input-container required-field">Teléfono:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <input matInput id="phone" [formField]="contactForm.telefono_contacto" [errorStateMatcher]="contactPhoneError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'telefono_contacto')" placeholder="Ej. 951234567" soloNumeros>
+                </mat-form-field>
+                @if (contactPhoneError.mostrarErrores()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactPhoneError.errores(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="clientSelect" class="label-input-container required-field">Cliente:</label>
+                <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
+                    <mat-select id="clientSelect" [formField]="contactForm.id_cliente">
+                        <mat-option [value]="0" selected>Seleccione una opción</mat-option>
+                        @for (client of customers(); track client.id) {
+                            <mat-option [value]="client.id">{{ client.nombre_cliente }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                 @if (contactForm.id_cliente().invalid() && contactForm.id_cliente().touched()) {
+                    <mat-error class="error-list-container">
+                        <div class="error-list">
+                            @for (error of contactForm.id_cliente().errors(); track error.kind) {
+                                <div class="error-row">
+                                    <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                    <span>{{ error.message }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-error>
+                }
+            </div>
+            <div class="form-input-container">
+                <label for="state" class="label-input-container custom-switch required-field">Estado:</label>
+                <mat-slide-toggle id="state" [checked]="contactModel().estado" (change)="contactModel.update(m => ({...m, estado: $event.checked}))" [disabled]="isSaving()" subscriptSizing="dynamic">
+                    <p class="txt-switch">
+                        El contacto está <span class="state-text">&nbsp;{{contactModel().estado ? 'activo' : 'inactivo'}}.</span>
+                    </p>
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancelar</button>
+            <button mat-button [disabled]="isSaving()">
+                {{ isSaving() ? 'Guardando...' : (isEditMode() ? 'Actualizar' : 'Guardar') }}
+            </button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

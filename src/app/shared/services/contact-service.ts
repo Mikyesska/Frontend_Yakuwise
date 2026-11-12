@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiConfigService } from '../../core/services/api-config.service';
 import { Observable } from 'rxjs';
-import { ContactsListResponse, GetContactsParams } from '../interfaces/contacto-interface';
+import { ContactResponse, ContactsListResponse, CreateContactRequest, GetContactsParams } from '../interfaces/contacto-interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -36,4 +36,23 @@ export class ContactService {
       { params: httpParams }
     );
   }
+
+  getRoleById(id: number): Observable<ContactResponse> {
+    return this.http.get<ContactResponse>(`${this.apiConfig.contactosEndpoint()}${id}/`);
+  }
+
+  createContact(contactData: CreateContactRequest): Observable<ContactResponse> {
+    return this.http.post<ContactResponse>(
+      this.apiConfig.contactosEndpoint(),contactData
+    );
+  }
+
+  updateContact(id: number, contactData: Partial<CreateContactRequest>): Observable<ContactResponse> {
+    return this.http.put<ContactResponse>(`${this.apiConfig.contactosEndpoint()}${id}/`, contactData);
+  }
+
+  deleteRole(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiConfig.contactosEndpoint()}${id}/`);
+  }
+
 }
