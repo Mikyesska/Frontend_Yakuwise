@@ -26,7 +26,7 @@ export class RolComponent {
   private readonly dialog = inject(MatDialog); 
   private readonly rolesService = inject(RolesService); 
   
-  displayedColumns: string[] = ['id', 'name', 'state', 'actions']; 
+  displayedColumns: string[] = ['id', 'name', 'state', 'action']; 
   roles = signal<RoleData[]>([]); 
   totalRoles = signal<number>(0); 
   pageIndex = signal<number>(1); 

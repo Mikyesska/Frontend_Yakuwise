@@ -2,7 +2,6 @@
     <div class="title-container">
         <div class="title-body">
             <p class="title">Gestión de roles</p>
-            <p class="subtitle">Roles</p>
         </div>
         <div class="menu-route">
             <svg class="icon-home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" routerLink="/home/welcome/">
@@ -15,21 +14,22 @@
         </div>
     </div>
     <div class="body-container">
-        <div class="buttons-container">
-            <app-button-component type="submit" label="Nuevo Rol" icon="plus" color="primary" (click)="openModalCreateRole()" onKeyPress />
-        </div>
-        <div class="search-container">
-            <label for="buscarRol">Buscar rol:</label>
-            <mat-form-field class="custom-search-field" appearance="outline">
-                <input matInput id="buscarRol" [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" placeholder="Ej. Operador" 
-                    #input>
-                @if (searchTerm()) {
-                    <button mat-icon-button matSuffix class="small-clear-btn" (click)="onSearchChange(''); input.value=''" aria-label="Limpiar">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                }
-            </mat-form-field>
-        </div>
+        <app-button-component type="submit" class="buttons-container" label="Nuevo rol" icon="plus" color="primary" (click)="openModalCreateRole()" onKeyPress />
+        <mat-form-field class="custom-search-field" appearance="outline">
+            <input matInput id="rolSearch" [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" aria-label="Buscar rol" placeholder="Buscar rol" 
+                #input>
+            @if (!searchTerm()) {
+                <button type="button" matIconButton matSuffix class="search-icon-btn" (click)="onSearchChange(''); input.value=''" aria-label="Buscar rol" disabled>
+                    <mat-icon>search</mat-icon>
+                </button>
+            }
+            @else {
+                <button type="button" matIconButton matSuffix class="clear-search-btn" (click)="onSearchChange(''); input.value=''" aria-label="Limpiar búsqueda">
+                    <mat-icon>close</mat-icon>
+                </button>
+            }
+        </mat-form-field>
+       
         <section class="table-container mat-elevation-z8">
             <table mat-table [dataSource]="displayedRoles()" matSort (matSortChange)="onSortChange($event)" matSortDirection="desc">
                 <ng-container matColumnDef="id">
@@ -55,7 +55,7 @@
                         }
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="actions">
+                <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef>Acción</th>
                     <td mat-cell *matCellDef="let element" class="rolActions">
                         <button type="button" class="btn-edit" matTooltip="Editar" matTooltipPosition="below" (click)="openModalCreateRole(element)">

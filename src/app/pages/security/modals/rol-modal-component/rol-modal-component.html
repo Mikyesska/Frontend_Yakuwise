@@ -1,5 +1,5 @@
 <p mat-dialog-title class="modal-title">
-    {{ isEditMode() ? 'Editar Rol' : 'Agregar Rol' }}
+    {{ isEditMode() ? 'Editar rol' : 'Agregar rol' }}
     <button mat-icon-button class="close-button" matTooltip="Cerrar" mat-dialog-close>
         <mat-icon>close</mat-icon>
     </button>
@@ -18,10 +18,10 @@
                 <mat-error class="error-list-container">
                     <div class="error-list">
                         @for (error of rolError.errores(); track error.kind) {
-                        <div class="error-row">
-                            <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
-                            <span>{{ error.message }}</span>
-                        </div>
+                            <div class="error-row">
+                                <img [src]="errorIconPath()" class="error-icon" alt="Error" width="16" height="16" />
+                                <span>{{ error.message }}</span>
+                            </div>
                         }
                     </div>
                 </mat-error>
