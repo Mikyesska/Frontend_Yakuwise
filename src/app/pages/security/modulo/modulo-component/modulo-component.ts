@@ -14,10 +14,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button'; 
 import { ModulosService } from '../../../../shared/services/modulos.service'; 
 import { ModuloData, ModuloResponse, ModulosListResponse } from '../../../../shared/interfaces/modulos-interface';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-modulo-component', 
-  imports: [ButtonComponent, RouterLink, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, FormsModule, MatIconModule, MatButtonModule], 
+  imports: [ButtonComponent, RouterLink, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, FormsModule, MatIconModule, MatButtonModule, MatChipsModule], 
   templateUrl: './modulo-component.html', 
   styleUrl: './modulo-component.scss', 
 })
@@ -26,7 +27,7 @@ export class ModuloComponent {
   private readonly dialog = inject(MatDialog); 
   private readonly modulosService = inject(ModulosService); 
   
-  displayedColumns: string[] = ['id', 'name', 'menus', 'state', 'actions']; 
+  displayedColumns: string[] = ['id', 'name', 'menus', 'state', 'action']; 
   modulos = signal<ModuloData[]>([]); 
   totalModulos = signal<number>(0); 
   pageIndex = signal<number>(1); 
@@ -111,7 +112,6 @@ export class ModuloComponent {
     const menus = apiResponse.menus_asociados
       ?.filter(menu => menu !== null)
       .map(menu => {
-        // Handle if menu is a string (just the name)
         if (typeof menu === 'string') {
           return {
             id: 0,
@@ -124,7 +124,7 @@ export class ModuloComponent {
             state: 'Activo'
           };
         }
-        // Handle if menu is an object (MenuResponse)
+        
         return {
           id: menu.id_menu || menu.id || 0,
           nivel: menu.nivel,

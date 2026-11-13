@@ -102,7 +102,7 @@
             .small-clear-btn {
                 &:hover {
                     mat-icon {
-                        color: v.$white-color !important;
+                        color: v.$white-color;
                     }
                 }
             }
@@ -117,14 +117,15 @@
             
             .icon-edit {
                 fill: v.$edit-color;
-                width: 1.75rem;
-                height: 1.75rem;
+                width: 1.625rem;
+                height: 1.625rem;
                 stroke: #A3A300;
-                transition: filter 0.2s ease-in-out
+                transition: filter 0.2s ease-in-out;
             }
 
             .icon-edit:hover {
                 stroke: #474700;
+                stroke-width: 2px;
             }
 
         }
@@ -138,8 +139,8 @@
             
             .icon-reset-pass {
                 fill: v.$cancelar-color;
-                width: 1.75rem;
-                height: 1.75rem;
+                width: 1.5rem;
+                height: 1.5rem;
                 transition: filter 0.2s ease-in-out;
             }
 
@@ -162,8 +163,8 @@
             .icon-assign
             {
                 fill: v.$primary-color;
-                width: 1.75rem;
-                height: 1.75rem;
+                width: 1.5rem;
+                height: 1.5rem;
                 transition: filter 0.2s ease-in-out
             }
 

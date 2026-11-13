@@ -1,651 +1,655 @@
-@use '@angular/material' as mat;
-@use 'abstracts/variables' as v;
-@use 'abstracts/mixins' as m;
+    @use '@angular/material' as mat;
+    @use 'abstracts/variables' as v;
+    @use 'abstracts/mixins' as m;
 
-html {
-    color-scheme: light;
-    @include mat.theme((
-        color: (
-            primary: mat.$azure-palette,
-            tertiary: mat.$blue-palette,
-            theme-type: light,
-    ),
-    typography: Roboto,
-    density: 0
-    ));
-}
-
-// 1. Reset Global y Box Sizing
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-}
-
-:root {
-    @include mat.paginator-overrides(
-        (
-            container-text-color : v.$dark-color,
-            container-background-color: v.$white-color,
-            enabled-icon-color:v.$primary-color,
-            page-size-select-width: 4rem,
-            page-size-select-touch-target-height: 1rem,
-            container-text-font: 1rem,
-            container-text-line-height: 1rem,
-            container-text-size: 0.875rem,
-            select-trigger-text-size: 0.8125rem,
-            container-size: 1rem,
-            form-field-container-height: 1rem,
-            form-field-container-vertical-padding: 0.25rem,
-        )
-      
-    );
-    .mat-mdc-paginator{
-        margin-block: 1.5rem;
+    html {
+        color-scheme: light;
+        @include mat.theme((
+            color: (
+                primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+                theme-type: light,
+        ),
+        typography: Roboto,
+        density: 0
+        ));
     }
-    // Aplica a todos los selectores de los paginadores de tu app
-    .mat-mdc-paginator .mat-mdc-form-field:hover .mdc-notched-outline__leading,
-    .mat-mdc-paginator .mat-mdc-form-field:hover .mdc-notched-outline__notch,
-    .mat-mdc-paginator .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
-        border-color: v.$primary-hover-color !important; 
-    }
-    .mat-mdc-paginator .mat-mdc-form-field:active .mdc-notched-outline__leading,
-    .mat-mdc-paginator .mat-mdc-form-field:active .mdc-notched-outline__notch,
-    .mat-mdc-paginator .mat-mdc-form-field:active .mdc-notched-outline__trailing {
-        border-color: v.$primary-active-color !important; 
-    }
-    .mat-mdc-select-arrow{
-        color: v.$primary-color;
+
+    // 1. Reset Global y Box Sizing
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
 
     }
-    .mat-mdc-select-panel {
-        color: v.$primary-color;
-        background-color:v.$light-primary-color;
-        padding-top: 0px !important;
-        padding-bottom: 0px !important;
-        align-items: stretch;
+
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+    }
+
+    :root {
+        @include mat.paginator-overrides(
+            (
+                container-text-color : v.$dark-color,
+                container-background-color: v.$white-color,
+                enabled-icon-color:v.$primary-color,
+                page-size-select-width: 3.875rem,
+                page-size-select-touch-target-height: 0.8125rem,
+                container-text-font: 0.875rem,
+                container-text-line-height: 0.8125rem,
+                container-text-size: 0.8125rem,
+                select-trigger-text-size: 0.8125rem,
+                container-size: 0.8125rem,
+                form-field-container-height: 0.8125rem,
+                form-field-container-vertical-padding: 0.125rem,
+            )
         
-        .mdc-list {
-            padding-top: 0px !important;
-            padding-bottom: 0px !important;
+        );
+        .mat-mdc-paginator{
+            width: 100%;
         }
-        
+        // Aplica a todos los selectores de los paginadores de tu app
+        .mat-mdc-paginator .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+        .mat-mdc-paginator .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+        .mat-mdc-paginator .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+            border-color: v.$primary-hover-color; 
+        }
+        .mat-mdc-paginator .mat-mdc-form-field:active .mdc-notched-outline__leading,
+        .mat-mdc-paginator .mat-mdc-form-field:active .mdc-notched-outline__notch,
+        .mat-mdc-paginator .mat-mdc-form-field:active .mdc-notched-outline__trailing {
+            border-color: v.$primary-active-color; 
+        }
+        .mat-mdc-select-arrow{
+            color: v.$primary-color;
+
+        }
+        .mat-mdc-select-panel {
+            color: v.$primary-color;
+            background-color:v.$light-primary-color;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            align-items: stretch;
+            
+            .mdc-list {
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+            
+            .mat-mdc-option {
+                font-size: 0.875rem;
+                font-weight: 400;
+                color: v.$dark-color;
+                background-color: v.$white-color;
+                min-height: 1.5rem;
+                
+                .mdc-list-item__primary-text {
+                    width: 100%;
+                    font-size: 0.8125rem;
+                }
+            }
+            .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+                .mdc-list-item__primary-text {
+                color: v.$white-color;
+                }
+            }
+        }
         .mat-mdc-option {
             font-size: 0.875rem;
-            font-weight: 400;
-            color: v.$dark-color;
+            min-height: 2rem;
+        }
+        div.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible {
             background-color: v.$white-color;
-            min-height: 1.5rem;
+        }
+        .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-active, .mat-mdc-option-multiple, :focus, :hover){
+            background-color:v.$light-primary-color;
+        }
+        
+        .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+            background-color:v.$primary-color;
+            color: v.$white-color;
+            font-size: 0.875rem;
+            font-weight: 500;
+
+            .mdc-list-item__primary-text {
+                color: v.$white-color;
+            }
+        }
+        .mat-mdc-option:active:not(.mdc-list-item--disabled) {
+            background-color:v.$primary-active-color;
+        }
+        
+        .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+            background-color: v.$light-primary-color;
+            width: 100%;
             
             .mdc-list-item__primary-text {
+                font-size: 0.875rem;
+                color: v.$dark-color;
                 width: 100%;
             }
         }
-        .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
-            .mdc-list-item__primary-text {
-            color: v.$white-color !important;
-            }
-        }
-    }
-    .mat-mdc-option {
-        font-size: 0.875rem;
-        min-height: 2rem;
-    }
-    div.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible {
-        background-color: v.$white-color;
-    }
-    .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-active, .mat-mdc-option-multiple, :focus, :hover){
-        background-color:v.$light-primary-color;
-    }
-    
-    .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
-        background-color:v.$primary-color;
-        color: v.$white-color;
-        font-size: 0.875rem;
-        font-weight: 500;
-
-        .mdc-list-item__primary-text {
-            color: v.$white-color !important;
-        }
-    }
-    .mat-mdc-option:active:not(.mdc-list-item--disabled) {
-        background-color:v.$primary-active-color;
-    }
-    
-    .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
-        background-color: v.$light-primary-color;
-        width: 100%;
         
-        .mdc-list-item__primary-text {
-            font-size: 0.875rem;
-            color: v.$dark-color !important;
-            width: 100%;
-        }
-    }
-    
-    .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):hover {
-        background-color: v.$primary-hover-color !important;
-    }
-    
-    // Estilos del icono del buscador
-    @include mat.icon-overrides((
-        color: v.$primary-color,
-    ));
-    
-    .small-clear-btn.mat-mdc-icon-button {
-        --mdc-icon-button-state-layer-size: 1.5rem !important;
-        --mdc-icon-button-icon-size:1rem !important;
-        
-        width: 1.5rem !important;
-        height: 1.5rem !important;
-        padding: 0 !important;
-        line-height: 1.5rem !important;
-        right: 0.5rem;
-        
-        &:hover{
-            background-color: v.$primary-color;
+        .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):hover {
+            background-color: v.$primary-hover-color;
         }
         
-        .mat-icon {
-            font-size: 1rem !important;
-            width: 1rem !important;
-            height: 1rem !important;
+        // Estilos del icono del buscador
+        @include mat.icon-overrides((
+            color: v.$primary-color,
+        ));
+        
+        .small-clear-btn.mat-mdc-icon-button {
+            --mdc-icon-button-state-layer-size: 1.5rem;
+            --mdc-icon-button-icon-size:1rem;
+            
+            width: 1.5rem;
+            height: 1.5rem;
+            padding: 0;
+            line-height: 1.5rem;
+            right: 0.5rem;
             
             &:hover{
-                color: v.$white-color;
-            }
-        }
-
-        .mat-mdc-button-touch-target {
-            width: 1.5rem !important;
-            height: 1.5rem !important;
-        }
-    }
-    // Estilos del slideToggle o switch
-    @include mat.slide-toggle-overrides((
-        label-text-line-height:1rem,
-        label-text-size:0.875rem,
-        label-text-weight:400,
-        state-layer-size:1rem,
-        label-text-color:v.$dark-color,
-        selected-focus-handle-color:v.$white-color,
-        selected-focus-track-color:v.$primary-color,
-        selected-focus-state-layer-color:v.$primary-color,
-        selected-handle-color:v.$white-color,
-        selected-hover-handle-color:v.$white-color,
-        selected-hover-state-layer-color:v.$light-primary-color,
-        selected-hover-state-layer-opacity:0.08,
-        selected-hover-track-color:v.$primary-color,
-        selected-icon-color:v.$primary-color,
-        selected-pressed-handle-color:v.$white-color,
-        selected-pressed-track-color:v.$primary-color,
-        selected-track-color:v.$primary-color,
-        track-outline-color:v.$primary-color,
-        selected-track-outline-color:v.$primary-color,
-        disabled-unselected-track-outline-color:v.$primary-color,
-        unselected-icon-color:v.$white-color,
-        unselected-hover-track-color:v.$light-primary-color,
-        unselected-hover-handle-color:v.$primary-color,
-    ));
-
-    // Estilos de botones en modales
-    .mat-mdc-dialog-actions {
-        padding:0;
-        margin-bottom:1rem;
-        margin-top:0;
-        
-        .mat-mdc-button {
-            border: 1px solid transparent;
-            border-radius: v.$radius;
-            gap: 0.5rem;
-            font-weight: 400;
-            
-            // Botón secundario (Cancelar/Cerrar) - primer botón
-            &:first-child {
-                background-color: v.$cancelar-color;
-                color: v.$white-color;
-                border-color: v.$cancelar-color;
-                
-                &:hover {
-                    background-color: v.$cancelar-hover-color;
-                    border-color: v.$cancelar-hover-color;
-                }
-                
-                &:active {
-                    background-color: v.$cancelar-active-color;
-                    border-color: v.$cancelar-active-color;
-                    font-weight: 500;
-                }
-            }
-            
-            // Botón principal (Guardar/Crear/Editar) - segundo botón
-            &:last-child {
                 background-color: v.$primary-color;
-                color: v.$white-color;
-                border-color: v.$primary-color;
+            }
+            
+            .mat-icon {
+                font-size: 1rem;
+                width: 1rem;
+                height: 1rem;
                 
-                &:hover {
-                    background-color: v.$primary-hover-color;
-                    border-color: v.$primary-hover-color;
+                &:hover{
+                    color: v.$white-color;
+                }
+            }
+
+            .mat-mdc-button-touch-target {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+        // Estilos del slideToggle o switch
+        @include mat.slide-toggle-overrides((
+            label-text-line-height:1rem,
+            label-text-size:0.875rem,
+            label-text-weight:400,
+            state-layer-size:1rem,
+            label-text-color:v.$dark-color,
+            selected-focus-handle-color:v.$white-color,
+            selected-focus-track-color:v.$primary-color,
+            selected-focus-state-layer-color:v.$primary-color,
+            selected-handle-color:v.$white-color,
+            selected-hover-handle-color:v.$white-color,
+            selected-hover-state-layer-color:v.$light-primary-color,
+            selected-hover-state-layer-opacity:0.08,
+            selected-hover-track-color:v.$primary-color,
+            selected-icon-color:v.$primary-color,
+            selected-pressed-handle-color:v.$white-color,
+            selected-pressed-track-color:v.$primary-color,
+            selected-track-color:v.$primary-color,
+            track-outline-color:v.$primary-color,
+            selected-track-outline-color:v.$primary-color,
+            disabled-unselected-track-outline-color:v.$primary-color,
+            unselected-icon-color:v.$white-color,
+            unselected-hover-track-color:v.$light-primary-color,
+            unselected-hover-handle-color:v.$primary-color,
+        ));
+
+        // Estilos de botones en modales
+        .mat-mdc-dialog-actions {
+            padding:0;
+            margin-bottom:1rem;
+            margin-top:0;
+            
+            .mat-mdc-button {
+                border: 1px solid transparent;
+                border-radius: v.$radius;
+                gap: 0.5rem;
+                font-weight: 400;
+                
+                // Botón secundario (Cancelar/Cerrar) - primer botón
+                &:first-child {
+                    background-color: v.$cancelar-color;
+                    color: v.$white-color;
+                    border-color: v.$cancelar-color;
+                    
+                    &:hover {
+                        background-color: v.$cancelar-hover-color;
+                        border-color: v.$cancelar-hover-color;
+                    }
+                    
+                    &:active {
+                        background-color: v.$cancelar-active-color;
+                        border-color: v.$cancelar-active-color;
+                        font-weight: 500;
+                    }
                 }
                 
-                &:active {
-                    background-color: v.$primary-active-color;
-                    border-color: v.$primary-active-color;
-                }
-                
-                &:disabled {
+                // Botón principal (Guardar/Crear/Editar) - segundo botón
+                &:last-child {
                     background-color: v.$primary-color;
                     color: v.$white-color;
-                    cursor: not-allowed;
-                    border-color: v.$primary-active-color;
-                    font-weight: 400;
-                    opacity: 0.5;
+                    border-color: v.$primary-color;
+                    
+                    &:hover {
+                        background-color: v.$primary-hover-color;
+                        border-color: v.$primary-hover-color;
+                    }
+                    
+                    &:active {
+                        background-color: v.$primary-active-color;
+                        border-color: v.$primary-active-color;
+                    }
+                    
+                    &:disabled {
+                        background-color: v.$primary-color;
+                        color: v.$white-color;
+                        cursor: not-allowed;
+                        border-color: v.$primary-active-color;
+                        font-weight: 400;
+                        opacity: 0.5;
+                    }
                 }
             }
         }
-    }
-    // Estilos para switches
-    .mdc-switch__track::before {
-        background-color: v.$light-primary-color;
-    }
-    .mdc-switch__track:hover {
-        background-color: v.$primary-hover-color;
-    }
-    .txt-switch{
-        @include m.layout-flex(row, flex-start, flex-end);
-        font-size:0.875rem;
-        margin-left: 0.5rem;
-        
-        .state-text{
-            color:v.$primary-active-color;
-            font-weight: 500;
-            font-size: 15px;
+        // Estilos para switches
+        .mdc-switch__track::before {
+            background-color: v.$light-primary-color;
         }
-    }
-    .custom-switch{
-        margin-bottom: 0.25rem;
-        display:block;
-    }
-
-    // Estilos para títulos de diálogos o modales
-    .mat-mdc-dialog-container .mat-mdc-dialog-title{
-        font-size: 1.25rem;
-        border-bottom: 1px solid v.$light-primary-color;
-        padding-bottom: 0.5rem;
-        padding-top:0;
-        margin-block: 0;
-    }
-    .mat-mdc-dialog-content > :first-child {
-        margin-top: 1rem;
-    }
-    // Estilos de los botones del modal
-    .mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-end, .mat-mdc-dialog-actions[align=end] {
-        
-        .mat-mdc-button {
-            height: 2.25rem;
-            padding: 0.5rem 0.875rem;
+        .mdc-switch__track:hover {
+            background-color: v.$primary-hover-color;
         }
-    }
-    // Estilos de input
-    @include mat.form-field-overrides((
-        outlined-hover-outline-color: v.$primary-color,
-        outlined-focus-outline-color: v.$primary-color,
-        outlined-outline-color: v.$gray-400,
-        container-height: 2.25rem,
-        container-vertical-padding: 0.875rem,
-        outlined-input-text-placeholder-color: v.$gray-400,
-        container-text-size: 0.875rem,
-    ));
-    .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
-        color: v.$dark-color;
-    }
-
-    // Estilos del select
-    @include mat.select-overrides((
-        enabled-trigger-text-color: #1a1b1f,
-        trigger-text-size: 0.875rem,
-    ));
-    .mat.select-overrides {
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-    .mat-mdc-select-disabled {
-        color: v.$dark-color;
-    }
-    // Estilos de la tabla angular material
-    @include mat.table-overrides((
-        background-color: v.$white-color,
-        row-item-outline-color:v.$light-primary-color,
-        header-container-height: 3rem,
-        row-item-container-height: 2.75rem,
-        footer-container-height: 2.75rem,
-        row-item-label-text-size: 0.875rem,
-    ));
-
-    // Estilos de los chips
-    @include mat.chips-overrides((
-        container-shape-radius: 1rem,
-        outline-color: v.$primary-color,
-        container-height: 2rem,
-        hover-state-layer-color: v.$light-secondary-color,
-        label-text-color: v.$dark-color,
-        label-text-weight: 400,
-    ));
-    
-    // Estilos de icon del boton
-     @include mat.icon-button-overrides((
-        ripple-color: none,
-        state-layer-color: none,
-    ));
-
-    // Estilos de alertas
-    @include mat.snack-bar-overrides((
-        button-color: v.$white-color,
-        container-color: v.$white-color,
-        supporting-text-color: v.$dark-color,
-    ));
-
-    .mdc-snackbar__label{
-        padding: 0.5rem;
-    }
-
-    // Modificadores estructurales y cromáticos bajo el namespace común
-    .custom-snackbar {
-        &.mat-mdc-snack-bar-container {
-            min-width: 280px !important; 
-            max-width: 500px !important;
-
-            &.mat-mdc-snack-bar-container {
-                padding: 0 !important;
-
-                .mdc-snackbar__surface {
-                    @include m.layout-flex(row, space-between, center);
-                    padding: 0.5rem !important;
-                    border-radius: v.$radius !important;
-                    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2) !important;
-                    width: 100% !important;
-                }
+        .txt-switch{
+            @include m.layout-flex(row, flex-start, flex-end);
+            font-size:0.875rem;
+            margin-left: 0.5rem;
             
-                &.alert-success .mdc-snackbar__surface {
-                    border-left: 0.5rem solid hsl(142, 71%, 40%);
-                    color: hsl(142, 71%, 40%);
-                    
-                    .alert-icon{
-                        padding-left: 0.5rem;
-                        padding-right: 1rem;
+            .state-text{
+                color:v.$primary-active-color;
+                font-weight: 500;
+                font-size: 15px;
+            }
+        }
+        .custom-switch{
+            margin-bottom: 0.25rem;
+            display:block;
+        }
+
+        // Estilos para títulos de diálogos o modales
+        .mat-mdc-dialog-container .mat-mdc-dialog-title{
+            font-size: 1.125rem;
+            border-bottom: 1px solid v.$light-primary-color;
+            padding-bottom: 0.25rem;
+            padding-top:0;
+            margin-block: 0;
+        }
+        .mat-mdc-dialog-content > :first-child {
+            margin-top: 1rem;
+        }
+        // Estilos de los botones del modal
+        .mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-end, .mat-mdc-dialog-actions[align=end] {
+            
+            .mat-mdc-button {
+                height: 2.25rem;
+                padding: 0.25rem 0.875rem;
+            }
+        }
+        // Estilos de input
+        @include mat.form-field-overrides((
+            outlined-hover-outline-color: v.$primary-color,
+            outlined-focus-outline-color: v.$primary-color,
+            outlined-outline-color: v.$gray-400,
+            container-height: 2.25rem,
+            container-vertical-padding: 0.875rem,
+            outlined-input-text-placeholder-color: v.$gray-400,
+            container-text-size: 0.875rem,
+        ));
+        .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
+            color: v.$dark-color;
+        }
+
+        // Estilos del select
+        @include mat.select-overrides((
+            enabled-trigger-text-color: #1a1b1f,
+            trigger-text-size: 0.875rem,
+        ));
+        .mat.select-overrides {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .mat-mdc-select-disabled {
+            color: v.$dark-color;
+        }
+        // Estilos de la tabla angular material
+        @include mat.table-overrides((
+            background-color: v.$white-color,
+            row-item-outline-color:v.$light-primary-color,
+            header-container-height: 2.5rem,
+            row-item-container-height: 2.5rem,
+            footer-container-height: 2.5rem,
+            row-item-label-text-size: 0.8125rem,
+            header-headline-size: 0.8125rem
+        ));
+
+        // Estilos de los chips
+        @include mat.chips-overrides((
+            container-shape-radius: 1rem,
+            outline-color: v.$primary-color,
+            container-height: 2rem,
+            hover-state-layer-color: v.$light-secondary-color,
+            label-text-color: v.$dark-color,
+            label-text-weight: 400,
+            label-text-size: 0.8125rem,
+        ));
+        
+        // Estilos de icon del boton
+        @include mat.icon-button-overrides((
+            ripple-color: none,
+            state-layer-color: none,
+        ));
+
+        // Estilos de alertas
+        @include mat.snack-bar-overrides((
+            button-color: v.$white-color,
+            container-color: v.$white-color,
+            supporting-text-color: v.$dark-color,
+        ));
+
+        .mdc-snackbar__label{
+            padding: 0.5rem;
+        }
+
+        // Modificadores estructurales y cromáticos bajo el namespace común
+        .custom-snackbar {
+            &.mat-mdc-snack-bar-container {
+                min-width: 280px; 
+                max-width: 500px;
+
+                &.mat-mdc-snack-bar-container {
+                    padding: 0;
+
+                    .mdc-snackbar__surface {
+                        @include m.layout-flex(row, space-between, center);
+                        padding: 0.5rem;
+                        border-radius: v.$radius;
+                        box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+                        width: 100%;
+                    }
+                
+                    &.alert-success .mdc-snackbar__surface {
+                        border-left: 0.5rem solid hsl(142, 71%, 40%);
                         color: hsl(142, 71%, 40%);
+                        
+                        .alert-icon{
+                            padding-left: 0.5rem;
+                            padding-right: 1rem;
+                            color: hsl(142, 71%, 40%);
 
+                        }
+                        .close-icon {
+                            color: hsl(142, 71%, 40%);
+                        }
                     }
-                    .close-icon {
-                        color: hsl(142, 71%, 40%);
-                    }
-                }
 
-                &.alert-error  .mdc-snackbar__surface {
-                    border-left: 0.5rem solid hsl(357, 74%, 55%);
-                    color: hsl(357, 74%, 55%);
-
-                    .alert-icon{
-                        padding-left: 0.5rem;
-                        padding-right: 1rem;
+                    &.alert-error  .mdc-snackbar__surface {
+                        border-left: 0.5rem solid hsl(357, 74%, 55%);
                         color: hsl(357, 74%, 55%);
-                    }
-                    .close-icon {
-                        color: hsl(357, 74%, 55%);
-                    }
-                }
 
-                &.alert-warning  .mdc-snackbar__surface {
-                    border-left: 0.5rem solid hsl(57, 100%, 35%);
-                    color: hsl(57, 100%, 35%);
+                        .alert-icon{
+                            padding-left: 0.5rem;
+                            padding-right: 1rem;
+                            color: hsl(357, 74%, 55%);
+                        }
+                        .close-icon {
+                            color: hsl(357, 74%, 55%);
+                        }
+                    }
 
-                    .alert-icon {
-                        padding-left: 0.5rem;
-                        padding-right: 1rem;
+                    &.alert-warning  .mdc-snackbar__surface {
+                        border-left: 0.5rem solid hsl(57, 100%, 35%);
                         color: hsl(57, 100%, 35%);
-                    }
-                    .close-icon {
-                        color: hsl(57, 100%, 35%);
-                    }
-                }
 
-                &.alert-info  .mdc-snackbar__surface {
-                    border-left: 0.5rem solid  v.$primary-color;
-                    color:  v.$primary-color;
-                    
-                    .alert-icon {
-                        padding-left: 0.5rem;
-                        padding-right: 1rem;
-                        color: v.$primary-color;
+                        .alert-icon {
+                            padding-left: 0.5rem;
+                            padding-right: 1rem;
+                            color: hsl(57, 100%, 35%);
+                        }
+                        .close-icon {
+                            color: hsl(57, 100%, 35%);
+                        }
                     }
-                    .close-icon {
-                        color: v.$primary-color;
+
+                    &.alert-info  .mdc-snackbar__surface {
+                        border-left: 0.5rem solid  v.$primary-color;
+                        color:  v.$primary-color;
+                        
+                        .alert-icon {
+                            padding-left: 0.5rem;
+                            padding-right: 1rem;
+                            color: v.$primary-color;
+                        }
+                        .close-icon {
+                            color: v.$primary-color;
+                        }
                     }
                 }
             }
         }
-    }
 
-    // menu de usuario
-    @include mat.menu-overrides((
-        container-color: v.$white-color,
-        container-shape: 8px,
-        divider-color: v.$gray-200,
-        item-icon-color: v.$primary-color,
-        item-label-text-color: v.$dark-color,
-        item-hover-state-layer-color: v.$light-primary-color,
-        item-focus-state-layer-color: v.$primary-color,
-        item-label-text-font: v.$primary-color,
-        item-label-text-weight: 400,
-        item-spacing: 8px,
-        item-label-text-line-height: 8px,
-    ));
+        // menu de usuario
+        @include mat.menu-overrides((
+            container-color: v.$white-color,
+            container-shape: 8px,
+            divider-color: v.$gray-200,
+            item-icon-color: v.$primary-color,
+            item-label-text-color: v.$dark-color,
+            item-hover-state-layer-color: v.$light-primary-color,
+            item-focus-state-layer-color: v.$primary-color,
+            item-label-text-font: v.$primary-color,
+            item-label-text-weight: 400,
+            item-spacing: 8px,
+            item-label-text-line-height: 8px,
+        ));
 
-    .mat-mdc-menu-item {
-        min-height: 2.25rem;
-    }
+        .mat-mdc-menu-item {
+            min-height: 2.25rem;
+        }
 
-    .mat-mdc-menu-panel {
-        border-radius: v.$radius;
-    }
+        .mat-mdc-menu-panel {
+            border-radius: v.$radius;
+        }
 
-    .mat-mdc-menu-panel .mat-divider {
-        margin-block: 0;
-    }
-    .mat-mdc-menu-content{
-        padding: 0;
-    }
-    @include mat.tooltip-overrides((
-        container-color: v.$primary-hover-color,
-        supporting-text-color: v.$white-color,
-        supporting-text-line-height: 1rem,
-    ));
+        .mat-mdc-menu-panel .mat-divider {
+            margin-block: 0;
+        }
+        .mat-mdc-menu-content{
+            padding: 0;
+        }
+        @include mat.tooltip-overrides((
+            container-color: v.$primary-hover-color,
+            supporting-text-color: v.$white-color,
+            supporting-text-line-height: 1rem,
+        ));
 
-    // Estilos de Badge
-    @include mat.badge-overrides((
-        background-color: v.$primary-color,
-    ));
-    
-}
-
-// Estilos del input buscador
-.custom-search-field {
-    width: 100%;
-    margin-top: 0.75rem;
-    margin-bottom: -0.5rem;
-    
-    search-icon-btn {
-        color: v.$primary-color;
-    }
-
-    .clear-search-btn {
-        color: v.$primary-color;
-    }
-}
-
-// Estilos de los input
-.form-input-container{
-    margin: 0;
-    padding: 0;
-    @include m.layout-flex(column, center, flex-start);
-    height: auto;
-    transition: margin-bottom 0.2s ease-in-out;
-    width: 100%;
-
-    .con-error {
-        margin-bottom: 0.25rem;
-    }
-}
-
-.form-input-container.con-error .custom-input .mat-mdc-form-field-subscript-wrapper {
-  height: auto !important;
-}
-
-.label-input-container
-{
-    margin-block: 0.25rem;
-    margin-inline: 0;
-    padding: 0;
-    color: v.$primary-color;
-    font-size: 0.875rem;
-    font-weight: 600;
-}
-
-.required-field::after{
-    content: " *";
-    color: v.$error-icon-color;
-    font-weight: bold;
-}
-
-.custom-input {
-    @include m.layout-flex();
-    width:100%;
-
-}
-.custom-input .mat-mdc-form-field-subscript-wrapper {
-    height: auto !important;
-    margin-bottom: 0.5rem;
-}
-
-.custom-select {
-    @include m.layout-flex();
-    width:100%;
-    margin-bottom: 0rem;
-}
-
-
-// Estilos de la tabla
-.table-container {
-    width: 100%;
-    overflow: auto;
-    
-    .mat-mdc-header-row {
-        background-color: v.$light-primary-color;
-        text-transform: uppercase;
-        font-weight: 700;
-    }
-
-    .mat-mdc-row:hover .mat-mdc-cell {
-        background-color:  v.$gray-100;
-    }
-
-    .no-data-message,
-    .searchTerm-message {
-        @include m.layout-flex();
-    }
-    
-}
-
-// Estilos del modal
-.mat-mdc-dialog-surface {
-    border-radius: 0.875rem !important;
-}
-
-// Estilos de modal usuarios
-.custom-responsive-modal-user {
-    width: 25rem;
-    max-width: 100vw !important;
-    height: auto;
-    
-    @include m.respond-to(md) {
-        width: 45rem;
-    }
-}
-
-// Estilos boton close
-.modal-title {
-    .close-button {
-        position: absolute;
-        right: 0.5rem;
-        top: 0.5rem;
-    }
-}
-
-// Estilo de chips
-.chips{
-    font-style: italic;
-    text-align: center;
-}
-
-.mat-mdc-chip-set .mdc-evolution-chip-set__chips{
-    justify-content: space-evenly;
-}
-
-.mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
-    z-index: 0;
-}
-
-
-// Estilos modal menus
-.custom-responsive-modal-menus {
-    width: 25rem;
-    max-width: 100vw !important;
-    height: auto;
-    
-    @include m.respond-to(md) {
-        width: 35rem;
-    }
-}
-
-.mat-mdc-option .mdc-list-item__primary-text {
-    font-size: 14px;
-}
-
-// Estilos de modal clientes
-.custom-responsive-modal-customer {
-    width: 25rem;
-    max-width: 100vw !important;
-    height: auto;
-    
-    @include m.respond-to(md) {
-        width: 42rem;
-    }
-}
-
-// Estilos de modal contactos
-.custom-responsive-modal-contact {
-    width: 25rem;
-    max-width: 100vw;
-    height: auto;
-    
-    @include m.respond-to(md) {
-        width: 50rem;
+        // Estilos de Badge
+        @include mat.badge-overrides((
+            background-color: v.$primary-color,
+        ));
         
-        .mat-mdc-dialog-content {
-            max-height: max-content;
+    }
+
+    // Estilos del input buscador
+    .custom-search-field {
+        width: 100%;
+        margin-top: 0.75rem;
+        margin-bottom: -0.5rem;
+        
+        search-icon-btn {
+            color: v.$primary-color;
+        }
+
+        .clear-search-btn {
+            color: v.$primary-color;
         }
     }
-}
+
+    // Estilos de los input
+    .form-input-container{
+        margin: 0;
+        padding: 0;
+        @include m.layout-flex(column, center, flex-start);
+        height: auto;
+        transition: margin-bottom 0.2s ease-in-out;
+        width: 100%;
+
+        .con-error {
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    .form-input-container.con-error .custom-input .mat-mdc-form-field-subscript-wrapper {
+    height: auto;
+    }
+
+    .label-input-container
+    {
+        margin-block: 0.25rem;
+        margin-inline: 0;
+        padding: 0;
+        color: v.$primary-color;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .required-field::after{
+        content: " *";
+        color: v.$error-icon-color;
+        font-weight: bold;
+    }
+
+    .custom-input {
+        @include m.layout-flex();
+        width:100%;
+
+    }
+    .custom-input .mat-mdc-form-field-subscript-wrapper {
+        height: auto;
+        margin-bottom: 0.5rem;
+    }
+
+    .custom-select {
+        @include m.layout-flex();
+        width:100%;
+        margin-bottom: 0rem;
+    }
+
+
+    // Estilos de la tabla
+    .table-container {
+        width: stretch;
+        overflow: auto;
+        height: stretch;
+
+        .mat-mdc-header-row {
+            background-color: v.$light-primary-color;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .mat-mdc-row:hover .mat-mdc-cell {
+            background-color:  v.$gray-100;
+        }
+
+        .no-data-message,
+        .searchTerm-message {
+            @include m.layout-flex();
+        }
+        
+    }
+
+    // Estilos del modal
+    .mat-mdc-dialog-surface {
+        --mat-dialog-container-shape: 0.75rem;
+    }
+
+    // Estilos de modal usuarios
+    .custom-responsive-modal-user {
+        width: 25rem;
+        max-width: 100vw;
+        height: auto;
+        
+        @include m.respond-to(md) {
+            width: 45rem;
+        }
+    }
+
+    // Estilos boton close
+    .modal-title {
+        .close-button {
+            position: absolute;
+            right: 0.5rem;
+            top: 0.5rem;
+        }
+    }
+
+    // Estilo de chips
+    .chips{
+        font-style: italic;
+        text-align: center;
+    }
+
+    .mat-mdc-chip-set .mdc-evolution-chip-set__chips{
+        justify-content: flex-start;
+    }
+
+    .mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
+        z-index: 0;
+    }
+
+
+    // Estilos modal menus
+    .custom-responsive-modal-menus {
+        width: 25rem;
+        max-width: 100vw;
+        height: auto;
+        
+        @include m.respond-to(md) {
+            width: 35rem;
+        }
+    }
+
+    .mat-mdc-option .mdc-list-item__primary-text {
+        font-size: 14px;
+    }
+
+    // Estilos de modal clientes
+    .custom-responsive-modal-customer {
+        width: 25rem;
+        max-width: 100vw;
+        height: auto;
+        
+        @include m.respond-to(md) {
+            width: 42rem;
+        }
+    }
+
+    // Estilos de modal contactos
+    .custom-responsive-modal-contact {
+        width: 25rem;
+        max-width: 100vw;
+        height: auto;
+        
+        @include m.respond-to(md) {
+            width: 50rem;
+            
+            .mat-mdc-dialog-content {
+                max-height: max-content;
+            }
+        }
+    }
 
