@@ -2,7 +2,7 @@ import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'; 
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatInputModule } from '@angular/material/input'; 
-import { MatFormFieldModule, MatFormField, MatError } from '@angular/material/form-field'; 
+import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,11 @@ import { ModuloData } from '../../../../shared/interfaces/modulos-interface';
 import { form, required, FormField, min, max, minLength, maxLength, disabled } from '@angular/forms/signals';
 import { LetrasDirective }  from '../../../../shared/directives/letras-directive';
 
+interface MenuDialogData extends MenuData {
+  isReadOnly?: boolean;
+  menuPadreNombre?: string;
+}
+
 @Component({ 
   selector: 'app-menu-modal', 
   imports: [
@@ -30,8 +35,6 @@ import { LetrasDirective }  from '../../../../shared/directives/letras-directive
     MatSelectModule,
     MatIconModule,
     MatTooltipModule,
-    MatFormField,
-    MatError,
     FormField,
     MatAutocompleteModule,
     LetrasDirective
@@ -45,11 +48,11 @@ export class MenuModalComponent implements OnInit {
   private readonly modulosService = inject(ModulosService);
   private readonly alertService = inject(AlertService); 
   private readonly dialogRef = inject(MatDialogRef<MenuModalComponent>); 
-  private readonly data = inject<MenuData | null>(MAT_DIALOG_DATA); 
+  private readonly data = inject<MenuDialogData | null>(MAT_DIALOG_DATA); 
   public errorService = inject(FormErrorService);
   private readonly iconService = inject(IconService);
   readonly isEditMode = signal<boolean>(!!this.data?.id_menu);
-  readonly isReadOnly = signal<boolean>((this.data as any)?.isReadOnly === true); 
+  readonly isReadOnly = signal<boolean>(this.data?.isReadOnly === true); 
   readonly isLoading = signal<boolean>(false);
   readonly isActive = signal<boolean>(false); 
   readonly errorIconPath = computed(() => this.iconService.getIconPath('error')());
@@ -61,8 +64,7 @@ export class MenuModalComponent implements OnInit {
   
   readonly filteredMenus = computed(() => {
     const search = this.menuSearch().toLowerCase();
-    
-    if (this.isEditMode() && !search) {
+    if (!search) {
       return this.menus();
     }
     return this.menus().filter(menu => 
@@ -86,7 +88,7 @@ export class MenuModalComponent implements OnInit {
     min(fieldPath.id_modulo, 1, { message: 'El módulo es requerido.' });
     min(fieldPath.nivel, 1, { message: 'Nivel mínimo 1.' });
     max(fieldPath.nivel, 2, { message: 'Nivel máximo 2.' });
-    min(fieldPath.orden, 1, { message: 'Nivel mínimo 1.' });
+    min(fieldPath.orden, 1, { message: 'Orden mínimo 1.' });
     max(fieldPath.orden, 10, { message: 'Orden máximo 10.' });
     minLength(fieldPath.nombre_menu, 3, { message: 'El nombre del menú debe tener un mínimo de 3 caracteres.' });
     maxLength(fieldPath.nombre_menu, 40, { message: 'El nombre del menú debe tener un máximo de 40 caracteres.' });
@@ -117,27 +119,28 @@ export class MenuModalComponent implements OnInit {
 
   ngOnInit(): void { 
     this.loadModulos();
-    this.loadMenus().then(() => {
-      if (this.data) { 
-        this.isEditMode.set(true); 
-        this.isActive.set(this.data.estado); 
+    this.loadMenus();
+    if (this.data) { 
+      this.isActive.set(this.data.estado); 
+      if (this.data.nivel === 2) {
+        this.menuSearch.set(this.data.menuPadreNombre ?? '');
+      }
+      
+      const idDepende = this.data.id_depende || 0;
+      
+      this.menuModel.set({
+        id_menu: this.data.id_menu,
+        nivel: this.data.nivel,
+        orden: this.data.orden,
+        ruta: this.data.ruta,
+        id_modulo: this.data.id_modulo,
+        nombre_modulo: this.data.nombre_modulo,
+        nombre_menu: this.data.nombre_menu,
+        estado: this.data.estado,
+        id_depende: idDepende,
         
-        const idDepende = this.data.id_depende || 0;
-        
-        this.menuModel.set({
-          id_menu: this.data.id_menu,
-          nivel: this.data.nivel,
-          orden: this.data.orden,
-          ruta: this.data.ruta,
-          id_modulo: this.data.id_modulo,
-          nombre_modulo: this.data.nombre_modulo,
-          nombre_menu: this.data.nombre_menu,
-          estado: this.data.estado,
-          id_depende: idDepende,
-          
-        });
-      } 
-    });
+      });
+    } 
   }
 
   loadModulos(): void {
@@ -156,22 +159,18 @@ export class MenuModalComponent implements OnInit {
     });
   }
 
-  loadMenus(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.menusService.getMenus({ page: 1, page_size: 100 }).subscribe({
-        next: (response) => {
-          const mappedMenus = response.results?.map(menu => ({
-            id: menu.id_menu || menu.id || 0,
-            name: menu.nombre_menu
-          })) || [];
-          this.menus.set(mappedMenus);
-          resolve();
-        },
-        error: (error) => {
-          console.log('Error al cargar menús', error);
-          reject(error);
-        }
-      });
+  loadMenus(): void {
+    this.menusService.getMenus({ page: 1, page_size: 100 }).subscribe({
+      next: (response) => {
+        const mappedMenus = response.results?.map(menu => ({
+          id: menu.id_menu || menu.id || 0,
+          name: menu.nombre_menu
+        })) || [];
+        this.menus.set(mappedMenus);
+      },
+      error: (error) => {
+        console.log('Error al cargar menús', error);
+      }
     });
   }
 
@@ -199,11 +198,6 @@ export class MenuModalComponent implements OnInit {
     const value = (event.target as HTMLInputElement).value;
     this.menuSearch.set(value);
     this.errorService.limpiarCampoBackend(this.backendErrors, 'id_depende');
-    
-    if (!value) {
-      this.menuModel.update(current => ({ ...current, id_depende: this.menuModel().id_depende }));
-    }
-    
   }
   
   onMenuSelected(event: MatAutocompleteSelectedEvent): void {
@@ -221,33 +215,21 @@ export class MenuModalComponent implements OnInit {
     return this.menuSearch() || '';
   };
   
-  private updateMenu(apiRequest: CreateMenuRequest): void {
-    this.menusService.updateMenu(this.data?.id_menu || 0, apiRequest).subscribe({ 
+  private saveMenu(apiRequest: CreateMenuRequest): void {
+    const isEdit = this.isEditMode() && !!this.data;
+    const request$ = isEdit
+      ? this.menusService.updateMenu(this.data!.id_menu, apiRequest)
+      : this.menusService.createMenu(apiRequest);
+
+    request$.subscribe({ 
       next: (result) => {
         this.isLoading.set(false);
-        this.alertService.success('Menú actualizado exitosamente.');
+        this.alertService.success(isEdit ? 'Menú actualizado exitosamente.' : 'Menú creado exitosamente.');
         this.dialogRef.close(result);
       }, 
       error: (err: AppHttpError) => {
         this.isLoading.set(false);
-        this.alertService.error(err.mensajeGeneral);
-        if (err.detalles) {
-          this.backendErrors.set(err.detalles);
-        }
-      } 
-    });
-  }
-
-  private createMenu(apiRequest: CreateMenuRequest) {
-    this.menusService.createMenu(apiRequest).subscribe({ 
-      next: (result) => { 
-        this.isLoading.set(false);
-        this.alertService.success('Menú creado exitosamente.');
-        this.dialogRef.close(result);
-      }, 
-      error: (err: AppHttpError) => { 
-        this.isLoading.set(false);
-        this.alertService.error(err.mensajeGeneral);
+        this.alertService.error(err.mensajeCompleto ?? err.mensajeGeneral);
         if (err.detalles) {
           this.backendErrors.set(err.detalles);
         }
@@ -258,6 +240,18 @@ export class MenuModalComponent implements OnInit {
   onSave(event: Event) {
     event.preventDefault();
     if (this.isReadOnly()) return;
+
+    if (this.menuForm.id_modulo().invalid() || this.menuForm.nombre_menu().invalid() || this.menuForm.nivel().invalid() ||
+      this.menuForm.orden().invalid() || this.menuForm.ruta().invalid() || this.menuForm.id_depende().invalid()) {
+      this.menuForm.id_modulo().markAsTouched();
+      this.menuForm.nombre_menu().markAsTouched();
+      this.menuForm.nivel().markAsTouched();
+      this.menuForm.orden().markAsTouched();
+      this.menuForm.ruta().markAsTouched();
+      this.menuForm.id_depende().markAsTouched();
+      return;
+    }
+
     this.isLoading.set(true);
     this.backendErrors.set({});
     
@@ -275,19 +269,6 @@ export class MenuModalComponent implements OnInit {
       apiRequest.id_depende = this.menuModel().id_depende;
     } 
 
-    if (this.isEditMode() && this.data) { 
-      this.updateMenu(apiRequest);
-    } else { 
-      this.createMenu(apiRequest);
-    }
-
-    if (this.menuForm.id_modulo().invalid() || this.menuForm.nombre_menu().invalid() || this.menuForm.nivel().invalid() || 
-      this.menuForm.ruta().invalid()) {
-        this.menuForm.id_modulo().markAsTouched();
-        this.menuForm.nombre_menu().markAsTouched();
-        this.menuForm.nivel().markAsTouched();
-        this.menuForm.ruta().markAsTouched();
-        this.menuForm.id_depende().markAsTouched();
-    }
+    this.saveMenu(apiRequest);
   }
 }

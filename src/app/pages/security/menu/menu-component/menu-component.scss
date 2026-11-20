@@ -1,44 +1,43 @@
+th.mat-column-nombre_modulo,
 th.mat-column-roles,
-th.mat-column-estado,
-th.mat-column-actions,
-.mat-column-nivel,
-.mat-column-id_depende,
-.mat-column-estado {
+th.mat-column-nombre_menu {
     text-align: center;
+
+    ::ng-deep .mat-sort-header-container {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
+td.mat-column-roles {
+    text-align: center;
+
+    ::ng-deep .mat-mdc-chip-set,
+    ::ng-deep .mdc-evolution-chip-set__chips {
+        justify-content: center;
+    }
+}
 .mat-column-id_menu {
-    width: 5%;
-    padding-left: 2rem;
+    width: 1%;
+}
+.mat-column-nombre_modulo {
+    width: 24%;
+    text-align: center;
 }
 
 .mat-column-nombre_menu {
-    width: 15%;
-    justify-items: start;
-}
-
-.mat-column-id_depende {
-    width: 20%;
-}
-
-.mat-column-nombre_modulo {
-    width: 10%;
-}
-
-.mat-column-roles {
-    width: 30%;
-}
-
-.mat-column-estado {
-    width: 5%;
-}
-
-.mat-column-actions {
-    width: 15%;
+    width: 23%;
     text-align: center;
 }
-
-.no-roles {
-    font-style: italic;
+.mat-column-roles {
+    width: 25%;
+    text-align: left;
+}
+.mat-column-estado {
+    width: 5%;
+    text-align: center;
+}
+.mat-column-actions {
+    width: 12%;
     text-align: center;
 }

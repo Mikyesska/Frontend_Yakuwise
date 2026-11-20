@@ -5,6 +5,7 @@ export interface  BackendErrorBody {
 
 export interface AppHttpError {
   mensajeGeneral: string;
+  mensajeCompleto?: string;
   detalles?: Record<string, string[]>;
   status: number;
   statusText?: string;

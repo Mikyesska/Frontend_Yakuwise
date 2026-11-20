@@ -34,10 +34,28 @@ function processErrorDetalles(detalles: any): Record<string, any> {
   return mapaErrores;
 }
 
+function flattenDetalles(detalles: any): string[] {
+  if (!detalles || typeof detalles !== 'object') {
+    return [];
+  }
+
+  return Object.values(detalles).flatMap((value: any) =>
+    Array.isArray(value)
+      ? value.map(String)
+      : value && typeof value === 'object'
+        ? flattenDetalles(value)
+        : [String(value)]
+  );
+}
+
 function buildErrorResponse(err: HttpErrorResponse, body: any, mapaErrores: any) {
+  const mensajeGeneral = body?.error || 'Ocurrió un problema inesperado en el servidor.';
+  const detalles = mapaErrores ? flattenDetalles(mapaErrores) : [];
+
   return throwError(() => ({
     status: err.status,
-    mensajeGeneral: body?.error || 'Ocurrió un problema inesperado en el servidor.',
+    mensajeGeneral,
+    mensajeCompleto: [mensajeGeneral, ...detalles].join(' ').trim(),
     ...(mapaErrores && Object.keys(mapaErrores).length > 0 && { detalles: mapaErrores })
   }));
 }
@@ -51,11 +69,13 @@ export const errorParserInterceptor: HttpInterceptorFn = (req, next) => {
       if (err.status === 401) {
         authService.clearSession();
         router.navigate(['/login']);
-        return throwError(() => ({ status: 401, mensajeGeneral: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.' }));
+        const mensaje = 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.';
+        return throwError(() => ({ status: 401, mensajeGeneral: mensaje, mensajeCompleto: mensaje }));
       }
       
       if (err.status === 0) {
-        return throwError(() => ({ status: 0, mensajeGeneral: 'No se pudo conectar al servidor. Revisa tu conexión.' }));
+        const mensaje = 'No se pudo conectar al servidor. Revisa tu conexión.';
+        return throwError(() => ({ status: 0, mensajeGeneral: mensaje, mensajeCompleto: mensaje }));
       }
 
       const body = err.error && typeof err.error === 'object' ? (err.error as any) : null;

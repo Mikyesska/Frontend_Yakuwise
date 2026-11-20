@@ -16,13 +16,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MenuResponse, MenusListResponse, MenuData } from '../../../../shared/interfaces/menus-interface';
 import { AssignRolesModalComponent, AssignRolesData } from '../../modals/assign-roles-modal/assign-roles-modal.component';
-import { MatBadgeModule } from '@angular/material/badge';
 import { SubtitlePipe } from '../../../../shared/pipes/subtitle-pipe';
 import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-menu-component',
-  imports: [ButtonComponent, RouterLink, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, FormsModule, MatIconModule, MatButtonModule, MatChipsModule, MatBadgeModule, SubtitlePipe, UpperCasePipe],
+  imports: [ButtonComponent, RouterLink, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, FormsModule, MatIconModule, MatButtonModule, MatChipsModule, SubtitlePipe, UpperCasePipe],
   templateUrl: './menu-component.html',
   styleUrl: './menu-component.scss',
 })
@@ -31,7 +30,7 @@ export class MenuComponent {
   private readonly dialog = inject(MatDialog); 
   private readonly menusService = inject(MenusService);
   
-  displayedColumns: string[] = ['id_menu', 'nombre_menu', 'id_depende', 'nombre_modulo', 'roles', 'estado', 'actions']; 
+  displayedColumns: string[] = ['id_menu', 'nombre_modulo','nombre_menu', 'roles', 'estado', 'actions']; 
   menus = signal<MenuData[]>([]); 
   allMenus = signal<MenuData[]>([]);
   totalMenus = signal<number>(0); 
@@ -43,7 +42,7 @@ export class MenuComponent {
 
   constructor() { 
     this.loadMenus(); 
-    this.loadAllMenus(); // Cargar todos los menús para obtener nombres de padres
+    this.loadAllMenus();
   } 
 
   loadAllMenus(): void {
@@ -58,21 +57,7 @@ export class MenuComponent {
     });
   }
 
-  getMenuPadreName(idDepende: number): string {
-    if (!idDepende || idDepende === 0) {
-      return 'SIN MENÚ PADRE';
-    }
-    const menuPadre = this.allMenus().find(menu => menu.id_menu === idDepende);
-    return menuPadre ? menuPadre.nombre_menu : 'MENÚ PADRE NO ENCONTRADO';
-  }
-
   loadMenus(): void { 
-    let ordering = ''; 
-    if (this.activeSort()?.active && this.activeSort()?.direction) { 
-      const field = this.mapSortField(this.activeSort().active); 
-      const direction = this.activeSort().direction === 'asc' ? '' : '-'; 
-      ordering = `${direction}${field}`; 
-    } 
     const rawSearch = this.searchTerm().toLowerCase().trim(); 
     const palabrasEstado = ['activo', 'inactivo', 'act', 'inac', 'ina', 'activ', 'inactiv']; 
     const esBusquedaDeEstado = palabrasEstado.includes(rawSearch); 
@@ -80,7 +65,7 @@ export class MenuComponent {
 
     this.menusService.getMenus({ 
       search: apiSearchParam, 
-      ordering: ordering || 'id_menu', 
+      ordering: 'id_menu', 
       page: this.pageIndex(), 
       page_size: this.pageSize() 
     }).subscribe({ 
@@ -95,38 +80,46 @@ export class MenuComponent {
     });
   } 
 
-  private mapSortField(field: string): string { 
-    const fieldMap: { [key: string]: string } = { 
-      'id_menu': 'id_menu', 
-      'nombre_menu': 'nombre_menu', 
-      'nombre_modulo': 'nombre_modulo',
-      'roles': 'roles',
-      'nivel': 'nivel',
-      'orden': 'orden',
-      'estado': 'estado',
-      'id_depende': 'id_depende'
-    }; 
-    return fieldMap[field] || field; 
-  } 
-
   displayedMenus = computed(() => { 
     const currentMenus = this.menus(); 
     const search = this.searchTerm().toLowerCase().trim(); 
-    if (!search) { 
-      return currentMenus; 
-    } 
-    return currentMenus.filter(menu => { 
-      const menuNameLower = menu.nombre_menu.toLowerCase(); 
-      const menuModuloLower = menu.nombre_modulo.toLowerCase();
-      const menuRolesNames = menu.roles?.map(r => r.nombre_rol.toLowerCase()).join(' ') || '';
-      const menuStateStr = menu.estado ? 'activo' : 'inactivo'; 
-      const menuIdStr = menu.id_menu?.toString() || ''; 
-      if (['activo', 'inactivo'].includes(search)) return menuStateStr === search; 
-      if (['act', 'activ', 'activo'].includes(search)) return menuStateStr === 'activo'; 
-      if (['inac', 'ina', 'inactiv', 'inactivo'].includes(search)) return menuStateStr === 'inactivo'; 
-      return menuNameLower.includes(search) || menuModuloLower.includes(search) || menuRolesNames.includes(search) || menuIdStr.includes(search); 
-    }); 
-  }); 
+    let result = currentMenus;
+    if (search) {
+      result = currentMenus.filter(menu => { 
+        const menuNameLower = menu.nombre_menu.toLowerCase(); 
+        const menuModuloLower = menu.nombre_modulo.toLowerCase();
+        const menuRolesNames = menu.roles?.map(r => r.nombre_rol.toLowerCase()).join(' ') || '';
+        const menuStateStr = menu.estado ? 'activo' : 'inactivo'; 
+        const menuIdStr = menu.id_menu?.toString() || ''; 
+        if (['activo', 'inactivo'].includes(search)) return menuStateStr === search; 
+        if (['act', 'activ', 'activo'].includes(search)) return menuStateStr === 'activo'; 
+        if (['inac', 'ina', 'inactiv', 'inactivo'].includes(search)) return menuStateStr === 'inactivo'; 
+        return menuNameLower.includes(search) || menuModuloLower.includes(search) || menuRolesNames.includes(search) || menuIdStr.includes(search); 
+      });
+    }
+    const sort = this.activeSort();
+    if (sort.active && sort.direction) {
+      const direction = sort.direction === 'asc' ? 1 : -1;
+      result = [...result].sort((a, b) => {
+        const valueA = this.getSortValue(a, sort.active);
+        const valueB = this.getSortValue(b, sort.active);
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return (valueA - valueB) * direction;
+        }
+        return String(valueA ?? '').localeCompare(String(valueB ?? ''), 'es') * direction;
+      });
+    }
+    return result;
+  });
+
+  private getSortValue(menu: MenuData, field: string): string | number {
+    switch (field) {
+      case 'id_menu': return menu.id_menu;
+      case 'nombre_menu': return menu.nombre_menu ?? '';
+      case 'nombre_modulo': return menu.nombre_modulo ?? '';
+      default: return '';
+    }
+  }
   
   onSearchChange(value: string): void { 
     this.searchTerm.set(value ?? ''); 
@@ -141,8 +134,6 @@ export class MenuComponent {
 
   onSortChange(sort: Sort): void { 
     this.activeSort.set(sort); 
-    this.pageIndex.set(1); 
-    this.loadMenus(); 
   } 
 
   private mapFromApiResponse(apiResponse: MenuResponse): MenuData { 
@@ -170,9 +161,12 @@ export class MenuComponent {
   }
 
   private openModalCreateMenu(menu?: MenuData, isReadOnly?: boolean): void { 
+    const menuPadreNombre = menu?.id_depende
+      ? this.allMenus().find(m => m.id_menu === menu.id_depende)?.nombre_menu ?? ''
+      : '';
     const dialogRef = this.dialog.open(MenuModalComponent, { 
       height: 'max-content', 
-      data: menu ? { ...menu, isReadOnly } : null, 
+      data: menu ? { ...menu, isReadOnly, menuPadreNombre } : null, 
       disableClose: true,
       panelClass: 'custom-responsive-modal-menus'
     }); 
