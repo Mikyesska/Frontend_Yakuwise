@@ -15,15 +15,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ClienteService } from '../../../../shared/services/cliente.service';
 import { AlertService } from '../../../../shared/services/alert.service';
 import { AppHttpError } from '../../../../shared/interfaces/error-interface';
+import { RucDirective } from '../../../../shared/directives/ruc-directive';
+import { NumerosDirective } from '../../../../shared/directives/numeros-directive';
 
 @Component({
   selector: 'app-customer-modal',
-  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTooltipModule, MatIconModule, FormsModule, MatFormField, FormField, LetrasDirective, MatSlideToggleModule],
+  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTooltipModule, MatIconModule, FormsModule, MatFormField, FormField, LetrasDirective, MatSlideToggleModule, RucDirective, NumerosDirective],
   templateUrl: './customer-modal-component.html',
   styleUrl: './customer-modal-component.scss',
 })
 
-export class CustomerModal {
+export class CustomerModal {  
   private readonly iconService = inject(IconService);
   private readonly customerService = inject(ClienteService);
   private readonly dialogRef = inject(MatDialogRef<CustomerModal>);
@@ -166,7 +168,11 @@ export class CustomerModal {
   
   private manejarErroresBackend(err: AppHttpError): void {
     this.isSaving.set(false);
-    this.alertService.error(err.mensajeGeneral || 'Ocurrió un error al procesar los datos.');
+    this.alertService.error(err.mensajeGeneral || err.statusText || 'Ocurrió un error al procesar los datos.');
+    if (err.detalles) {
+      this.backendErrors.set(err.detalles);
+      this.markAllFieldsAsTouched();
+    }
   }
   
   private mapToApiRequest(customerData: CustomerData): CreateCustomerRequest {

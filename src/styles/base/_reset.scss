@@ -630,11 +630,11 @@
     // Estilos de modal clientes
     .custom-responsive-modal-customer {
         width: 25rem;
-        max-width: 100vw;
         height: auto;
+        --mat-dialog-container-max-width: min(38rem, 100vw);
         
         @include m.respond-to(md) {
-            width: 42rem;
+            width: 38rem;
         }
     }
 

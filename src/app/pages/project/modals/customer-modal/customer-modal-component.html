@@ -44,9 +44,9 @@
                 }
             </div>
             <div class="form-input-container">
-                <label for="customerRuc" class="label-input-container required-field">Registro único de contribuyente:</label>
+                <label for="customerRuc" class="label-input-container required-field">Registro único de contribuyente (RUC):</label>
                 <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
-                    <input matInput id="customerRuc" [formField]="customerForm.ruc_cliente" [errorStateMatcher]="customerRucError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'ruc_cliente')" placeholder="Ej.  20123456789" soloNumeros>
+                    <input matInput id="customerRuc" [formField]="customerForm.ruc_cliente" [errorStateMatcher]="customerRucError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'ruc_cliente')" placeholder="Ej.  20123456789" soloRuc>
                 </mat-form-field>
                 @if (customerRucError.mostrarErrores()) {
                     <mat-error class="error-list-container">
@@ -64,7 +64,7 @@
             <div class="form-input-container">
                 <label for="customerPhone" class="label-input-container required-field">Teléfono:</label>
                 <mat-form-field appearance="outline" class="custom-input" subscriptSizing="dynamic">
-                    <input matInput id="customerPhone" [formField]="customerForm.telefono" [errorStateMatcher]="customerPhoneError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'telefono')" placeholder="Ej. 923456789">
+                    <input matInput id="customerPhone" [formField]="customerForm.telefono" [errorStateMatcher]="customerPhoneError.matcher" (input)="errorService.limpiarCampoBackend(backendErrors, 'telefono')" placeholder="Ej. 923456789" soloNumeros>
                 </mat-form-field>
                 @if (customerPhoneError.mostrarErrores()) {
                     <mat-error class="error-list-container">

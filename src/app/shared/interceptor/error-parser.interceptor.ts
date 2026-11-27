@@ -49,7 +49,8 @@ function flattenDetalles(detalles: any): string[] {
 }
 
 function buildErrorResponse(err: HttpErrorResponse, body: any, mapaErrores: any) {
-  const mensajeGeneral = body?.error || 'Ocurrió un problema inesperado en el servidor.';
+  const mensajeGeneral = body?.error
+    || (mapaErrores ? 'Error de validación. Revisa los campos registrados.' : 'Ocurrió un problema inesperado en el servidor.');
   const detalles = mapaErrores ? flattenDetalles(mapaErrores) : [];
 
   return throwError(() => ({
@@ -83,6 +84,14 @@ export const errorParserInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (body?.detalles && typeof body.detalles === 'object') {
         mapaErrores = processErrorDetalles(body.detalles);
+      } else if (body && typeof body === 'object') {
+        // DRF devuelve errores de validación en la raíz: { campo: [mensajes] }
+        const erroresRaiz = Object.fromEntries(
+          Object.entries(body).filter(([key]) => !['error', 'detail', 'detalles'].includes(key))
+        );
+        if (Object.keys(erroresRaiz).length > 0) {
+          mapaErrores = processErrorDetalles(erroresRaiz);
+        }
       }
 
       return buildErrorResponse(err, body, mapaErrores);
