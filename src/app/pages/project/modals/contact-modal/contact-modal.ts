@@ -70,9 +70,8 @@ export class ContactModal {
   constructor() {
     if (this.data?.id_contacto) {
       this.isEditMode.set(true);
-      this.loadCustomers();
     }
-     
+    this.loadCustomers();
   }
   readonly contactForm = form(this.contactModel, (fieldPath) => {
     required(fieldPath.nombres, { message: 'El nombre es requerido.' });
